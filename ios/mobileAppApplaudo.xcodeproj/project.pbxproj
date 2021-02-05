@@ -20,6 +20,8 @@
 		B57D5BA49B3B8D5E92F10DB5 /* libPods-mobileAppApplaudo-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7203D98FA8905BA98A2A7E08 /* libPods-mobileAppApplaudo-tvOSTests.a */; };
 		C182E51CE4F370FCF7D0F21F /* libPods-mobileAppApplaudo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1645D18799EE17CBEC4A6B7A /* libPods-mobileAppApplaudo-tvOS.a */; };
 		F0EDC36F34EA0AE64E30CF35 /* libPods-mobileAppApplaudo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A906405E79EB56D041332EDF /* libPods-mobileAppApplaudo.a */; };
+		4A7063DB8F3144A599835D91 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */; };
+		D0F8D9EEB1814076B8054170 /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		DB1350DB0642D3291E2DB133 /* Pods-mobileAppApplaudo-mobileAppApplaudoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo-mobileAppApplaudoTests.debug.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo-mobileAppApplaudoTests/Pods-mobileAppApplaudo-mobileAppApplaudoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */ = {isa = PBXFileReference; name = "Metropolis-Regular.otf"; path = "../src/assets/fonts/metropolis/Metropolis-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */ = {isa = PBXFileReference; name = "Metropolis-SemiBold.otf"; path = "../src/assets/fonts/metropolis/Metropolis-SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				9C22EEFD3A9279DB850760E7 /* Pods */,
+				6A5F869979DD4317BB5DB420 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -197,6 +202,16 @@
 			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		6A5F869979DD4317BB5DB420 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */,
+				14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -342,6 +357,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				4A7063DB8F3144A599835D91 /* Metropolis-Regular.otf in Resources */,
+				D0F8D9EEB1814076B8054170 /* Metropolis-SemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
