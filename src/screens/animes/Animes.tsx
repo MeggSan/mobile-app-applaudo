@@ -1,9 +1,20 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, Pressable} from 'react-native';
 
 // STYLES
 import {Styles} from './AnimesStyles';
 
-export const Animes = () => {
-  return <Text>Animes</Text>;
+export const Animes = ({navigation}) => {
+  const handleNavigate = () => {
+    navigation.navigate('Anime Detail');
+  };
+
+  return (
+    <>
+      <Text>Animes</Text>
+      <Pressable onPress={handleNavigate}>
+        <Text>Go to Anime Detail</Text>
+      </Pressable>
+    </>
+  );
 };

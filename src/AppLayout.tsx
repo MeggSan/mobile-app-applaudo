@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {DrawerNavigator} from './navigators/DrawerNavigator';
 
 export const AppLayout = () => {
-  return <Text>App Layout</Text>;
+  return <DrawerNavigator />;
 };
