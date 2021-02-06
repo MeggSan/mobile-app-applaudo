@@ -12,26 +12,26 @@ export const PROFILE = {
 export const PERSONAL_INFO = {
   TITLE: 'PERSONAL INFORMATION',
   CONTACT_INFO: {
-    TITLE: 'CONTACT INFORMATION',
+    TITLE: 'Contact Information',
     EMAIL: {
-      TITLE: 'EMAIL',
+      TITLE: 'E-mail',
       CONTENT: 'meggie.sanchez@gmail.com',
     },
     PHONE: {
-      TITLE: 'PHONE',
+      TITLE: 'Phone',
       CONTENT: '(+58) 414-1370539',
     },
     LOCATION: {
-      TITLE: 'LOCATION',
+      TITLE: 'Location',
       CONTENT: 'Caracas, Venezuela',
     },
   },
   HOBBIES: {
-    TITLE: 'HOBBIES',
+    TITLE: 'Hobbies',
     CONTENT: ['Reading', 'Dance', 'Gym', 'Hiking'],
   },
   LANGUAGES: {
-    TITLE: 'LANGUAGES',
+    TITLE: 'Languages',
     CONTENT: ['Spanish', 'English'],
   },
 };
@@ -77,7 +77,7 @@ export const PROFESSIONAL_INFO = {
 export const SOFTWARES_SKILLS = {
   TITLE: 'SOFTWARE SKILLS',
   PROGRAMMING: {
-    TITLE: 'PROGRAMMING',
+    TITLE: 'Programming',
     CONTENT: [
       'React Native, Expo',
       'Angular 2+',
@@ -90,7 +90,7 @@ export const SOFTWARES_SKILLS = {
     ],
   },
   SOFTWARES: {
-    TITLE: 'SOFTWARES / TOOLS / FRAMEWORKS',
+    TITLE: 'Softwares / Tools / Frameworks',
     CONTENT: [
       'HTML, SCSS, CSS, Bootstrap, Flexbox, Styled Components, Grid Layout',
       'JavaScript, TypeScript',
@@ -109,7 +109,7 @@ export const EDUCATION = {
       'Electives in: Graphic computing (modeling / animations with Maya and development with Unity 3D), and Augmented Reality (Unity 3D and Vuforia).',
   },
   COURSES: {
-    TITLE: 'COURSES',
+    TITLE: 'Courses',
     CONTENT: [
       'React Native',
       'React.js',

@@ -1,5 +1,9 @@
 import React from 'react';
+import {View} from 'react-native';
 
-export const CardInformation = () => {
-  return <></>;
+// STYLES
+import {Styles} from './CardInformationStyles';
+
+export const CardInformation = ({children}) => {
+  return <View style={Styles.container}>{children}</View>;
 };
