@@ -21,6 +21,7 @@ module.exports = {
           '@components': './src/components',
           '@library': './src/library',
           '@constants': './src/library/constants',
+          '@networking': './src/library/networking',
           '@navigators': './src/navigators',
           '@screens': './src/screens',
           '@utils': './src/utils',
