@@ -43,7 +43,11 @@
       "*": ["src/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
+      "@library/*": ["src/library/*"],
       "@constants/*": ["src/library/constants/*"],
+      "@networking/*": ["src/library/networking/*"],
+      "@navigators/*": ["src/navigators/*"],
+      "@screens/*": ["src/screens/*"],
       "@utils/*": ["src/utils/*"]
     } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
