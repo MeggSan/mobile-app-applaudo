@@ -1,13 +1,16 @@
-import React, {useEffect} from 'react';
-import {Text, Pressable} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text, Pressable, FlatList, ImageBackground, View} from 'react-native';
 
 // API
 import {getAnimeList} from '@networking/Animes';
 
 // STYLES
+import {GlobalStyles} from 'utils/GlobalStyles';
 import {Styles} from './AnimesStyles';
 
 export const Animes = ({navigation}) => {
+  const [animesList, setAnimesList] = useState([]);
+
   useEffect(() => {
     getAnimes();
   }, []);
@@ -18,15 +21,36 @@ export const Animes = ({navigation}) => {
 
   const getAnimes = async () => {
     const response = await getAnimeList('anime');
-    console.log('response', response.data);
+    setAnimesList(response.data.data);
+  };
+
+  const renderAnime = ({item}) => {
+    return (
+      <>
+        <Pressable style={Styles.containerPressable} onPress={handleNavigate}>
+          <ImageBackground
+            source={{uri: item.attributes.posterImage.small}}
+            imageStyle={Styles.imageBackground}
+            style={Styles.containerCard}
+            resizeMode="cover">
+            <View style={Styles.containerViewCard}>
+              <View style={Styles.overlay} />
+              <Text style={[GlobalStyles.titleCard, Styles.colorText]}>
+                {item.attributes.titles.en_jp}
+              </Text>
+            </View>
+          </ImageBackground>
+        </Pressable>
+      </>
+    );
   };
 
   return (
-    <>
-      <Text>Animes</Text>
-      <Pressable onPress={handleNavigate}>
-        <Text>Go to Anime Detail</Text>
-      </Pressable>
-    </>
+    <FlatList
+      data={animesList}
+      keyExtractor={(item) => item.id}
+      renderItem={renderAnime}
+      style={Styles.containerFlatList}
+    />
   );
 };
