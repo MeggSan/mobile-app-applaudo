@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {Text, Pressable, Image, ActivityIndicator, View} from 'react-native';
+import {
+  Text,
+  Pressable,
+  Image,
+  ActivityIndicator,
+  View,
+  Linking,
+} from 'react-native';
 
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
 import {CardImage} from '@components/cardImage/CardImage';
 import {CardInformation} from '@components/cardInformation/CardInformation';
+import {Button} from '@components/button/Button';
 
 // API
 import {getAnimeDetail} from '@networking/Animes';
@@ -28,7 +36,6 @@ export const AnimeDetail = ({route, navigation}) => {
     try {
       const response = await getAnimeDetail(animeId);
       setAnime(response.data.data);
-      console.log('anime', response.data.data);
     } catch (error) {
       console.log('error', error);
     }
@@ -37,6 +44,12 @@ export const AnimeDetail = ({route, navigation}) => {
 
   const handleNavigate = () => {
     navigation.navigate('Favorites');
+  };
+
+  const handleOpenYoutube = () => {
+    Linking.openURL(
+      `https://www.youtube.com/watch?v=${anime.attributes.youtubeVideoId}`,
+    );
   };
 
   return (
@@ -58,9 +71,12 @@ export const AnimeDetail = ({route, navigation}) => {
             </View>
             <View style={GlobalStyles.containerNameTitle}>
               <Text style={GlobalStyles.titleCard}>{ANIME_DETAIL.TITLES}</Text>
-              <Text style={GlobalStyles.textBold}>
-                {anime.attributes.titles.en}
-              </Text>
+              {anime.attributes.titles.en && (
+                <Text style={GlobalStyles.textBold}>
+                  {anime.attributes.titles.en}
+                </Text>
+              )}
+
               <Text style={GlobalStyles.textBold}>
                 {anime.attributes.titles.en_jp}
               </Text>
@@ -111,9 +127,13 @@ export const AnimeDetail = ({route, navigation}) => {
               </View>
             </View>
           </CardInformation>
-          <Text style={GlobalStyles.text}>
-            {anime.attributes.youtubeVideoId}
-          </Text>
+          {anime.attributes.youtubeVideoId !== '' &&
+            anime.attributes.youtubeVideoId && (
+              <Button
+                onPress={handleOpenYoutube}
+                text={ANIME_DETAIL.YOUTUBE_LINK}
+              />
+            )}
         </>
       )}
       {/* <Pressable onPress={handleNavigate}>
