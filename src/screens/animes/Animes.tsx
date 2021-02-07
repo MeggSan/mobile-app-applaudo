@@ -10,12 +10,13 @@ import {getAnimeList} from '@networking/Animes';
 // STYLES / OTHERS
 import {Styles} from './AnimesStyles';
 import {COLORS} from '@constants/Colors';
+import {API} from '@constants/Api';
 
 export const Animes = ({navigation}) => {
-  const LIMIT_QUANTITY_RESULTS = 20;
   const [animesList, setAnimesList] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [hasMoreToLoad, setHasMoreToLoad] = useState(true);
 
   useEffect(() => {
     getAnimes();
@@ -34,15 +35,19 @@ export const Animes = ({navigation}) => {
   const getAnimes = async () => {
     try {
       const response = await getAnimeList({
-        'page[limit]': LIMIT_QUANTITY_RESULTS,
+        'page[limit]': API.LIMIT_QUANTITY_RESULTS,
         'page[offset]': offset,
       });
-      const moreResults = [...animesList, ...response.data.data];
-      setAnimesList(moreResults);
+      if (response.data.data.length === 0) {
+        setHasMoreToLoad(false);
+      } else {
+        const moreResults = [...animesList, ...response.data.data];
+        setAnimesList(moreResults);
+      }
+      setLoading(false);
     } catch (error) {
       console.log('error', error);
     }
-    setLoading(false);
   };
 
   const handleMoreResults = () => {
@@ -58,7 +63,10 @@ export const Animes = ({navigation}) => {
       <Pressable
         style={Styles.containerPressable}
         onPress={() => handleNavigate(item.id)}>
-        <CardImage item={item} />
+        <CardImage
+          title={item.attributes.titles.en_jp}
+          image={item.attributes.coverImage && item.attributes.coverImage.small}
+        />
       </Pressable>
     );
   };
@@ -73,9 +81,9 @@ export const Animes = ({navigation}) => {
       renderItem={renderItem}
       style={Styles.containerFlatList}
       onEndReachedThreshold={0.01}
-      onEndReached={handleMoreResults}
+      onEndReached={hasMoreToLoad ? handleMoreResults : null}
       ListFooterComponent={renderFooter}
-      ListFooterComponentStyle={Styles.footerComponent}
+      ListFooterComponentStyle={hasMoreToLoad ? Styles.footerComponent : null}
       bounces={false}
     />
   );

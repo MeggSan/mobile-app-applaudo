@@ -5,20 +5,18 @@ import {ImageBackground, View, Text} from 'react-native';
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './CardImageStyles';
 
-export const CardImage = ({item: {attributes}}) => {
+export const CardImage = ({title, image, style = null}) => {
   return (
     <ImageBackground
       source={{
-        uri: attributes.coverImage ? attributes.coverImage.small : null,
+        uri: image,
       }}
       imageStyle={Styles.imageBackground}
-      style={Styles.containerCard}
+      style={style ? style : Styles.containerCard}
       resizeMode="cover">
       <View style={Styles.containerViewCard}>
         <View style={Styles.overlay} />
-        <Text style={[GlobalStyles.titleCard, Styles.colorText]}>
-          {attributes.titles.en_jp}
-        </Text>
+        <Text style={[GlobalStyles.titleCard, Styles.colorText]}>{title}</Text>
       </View>
     </ImageBackground>
   );

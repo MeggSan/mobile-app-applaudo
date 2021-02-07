@@ -1,4 +1,5 @@
 import {COLORS} from 'library/constants/Colors';
+import {PALETTE} from 'library/constants/Palette';
 import {StyleSheet} from 'react-native';
 
 export const Styles = StyleSheet.create({
@@ -8,6 +9,7 @@ export const Styles = StyleSheet.create({
   containerCard: {
     width: '100%',
     height: 200,
+    ...PALETTE.shadowBox,
   },
   containerViewCard: {
     ...StyleSheet.absoluteFillObject,
