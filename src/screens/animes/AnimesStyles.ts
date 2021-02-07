@@ -27,7 +27,11 @@ export const Styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: COLORS.BLACK,
+    opacity: 0.5,
     borderRadius: 20,
+  },
+  footerComponent: {
+    marginBottom: 80,
   },
 });
