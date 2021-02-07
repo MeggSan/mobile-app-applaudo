@@ -11,3 +11,6 @@ export const getAnimeEpisodesList = (animeId: number, params) =>
 
 export const getAnimeCharactersList = (animeId: number, params) =>
   api.get(`${URL}/${animeId}/anime-characters`, {params});
+
+export const getAnimeCharacterDetail = (animeCharacterId: number) =>
+  api.get(`${URL}-characters/${animeCharacterId}/character`);
