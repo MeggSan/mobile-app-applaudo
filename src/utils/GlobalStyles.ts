@@ -8,38 +8,28 @@ import {PALETTE} from '@constants/Palette';
 export const GlobalStyles = StyleSheet.create({
   titleCard: {
     ...PALETTE.wrapText,
-    ...{
-      fontFamily: FONTS.METROPOLIS_SEMIBOLD,
-      fontSize: FONTS_SIZES.TITLE_CARD,
-    },
+    fontFamily: FONTS.METROPOLIS_SEMIBOLD,
+    fontSize: FONTS_SIZES.TITLE_CARD,
   },
   title: {
     ...PALETTE.wrapText,
-    ...{
-      fontFamily: FONTS.METROPOLIS_SEMIBOLD,
-      fontSize: FONTS_SIZES.TITLE,
-    },
+    fontFamily: FONTS.METROPOLIS_SEMIBOLD,
+    fontSize: FONTS_SIZES.TITLE,
   },
   subtitle: {
     ...PALETTE.wrapText,
-    ...{
-      fontFamily: FONTS.METROPOLIS_SEMIBOLD,
-      fontSize: FONTS_SIZES.SUBTITLE,
-    },
+    fontFamily: FONTS.METROPOLIS_SEMIBOLD,
+    fontSize: FONTS_SIZES.SUBTITLE,
   },
   text: {
     ...PALETTE.wrapText,
-    ...{
-      fontFamily: FONTS.METROPOLIS_REGULAR,
-      fontSize: FONTS_SIZES.TEXT,
-    },
+    fontFamily: FONTS.METROPOLIS_REGULAR,
+    fontSize: FONTS_SIZES.TEXT,
   },
   textBold: {
     ...PALETTE.wrapText,
-    ...{
-      fontFamily: FONTS.METROPOLIS_SEMIBOLD,
-      fontSize: FONTS_SIZES.TEXT,
-    },
+    fontFamily: FONTS.METROPOLIS_SEMIBOLD,
+    fontSize: FONTS_SIZES.TEXT,
   },
   containerTitle: {
     flexDirection: 'row',
@@ -53,9 +43,7 @@ export const GlobalStyles = StyleSheet.create({
   },
   containerImage: {
     ...PALETTE.shadowBox,
-    ...{
-      flex: 0.5,
-    },
+    flex: 0.5,
   },
   containerNameTitle: {
     flex: 0.5,

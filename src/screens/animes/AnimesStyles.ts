@@ -1,5 +1,8 @@
-import {COLORS} from 'library/constants/Colors';
 import {StyleSheet} from 'react-native';
+
+// CONSTANTS
+import {COLORS} from '@constants/Colors';
+import {PALETTE} from '@constants/Palette';
 
 export const Styles = StyleSheet.create({
   containerPressable: {
@@ -10,10 +13,10 @@ export const Styles = StyleSheet.create({
     height: 200,
   },
   imageBackground: {
-    borderRadius: 20,
+    ...PALETTE.roundedBorder,
   },
   containerFlatList: {
-    padding: 20,
+    margin: 20,
   },
   colorText: {
     color: COLORS.WHITE,
@@ -29,7 +32,11 @@ export const Styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: COLORS.BLACK,
     opacity: 0.5,
-    borderRadius: 20,
+    ...PALETTE.roundedBorder,
+  },
+  headerComponent: {
+    backgroundColor: COLORS.WHITE_GRAY,
+    paddingBottom: 20,
   },
   footerComponent: {
     marginBottom: 80,

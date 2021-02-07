@@ -136,3 +136,7 @@ export const ANIME_DETAIL = {
   EPISODES: 'EPISODES',
   CHARACTERS: 'CHARACTERS',
 };
+
+export const ANIMES = {
+  SEARCH_PLACEHOLDER: 'Search your favorite animes',
+};

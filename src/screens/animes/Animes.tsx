@@ -3,6 +3,7 @@ import {Pressable, FlatList, ActivityIndicator} from 'react-native';
 
 // COMPONENTS
 import {CardImage} from '@components/cardImage/CardImage';
+import {SearchBar} from '@components/searchBar/SearchBar';
 
 // API
 import {getAnimeList} from '@networking/Animes';
@@ -13,30 +14,44 @@ import {COLORS} from '@constants/Colors';
 import {API} from '@constants/Api';
 
 export const Animes = ({navigation}) => {
+  const [valueSearch, setValueSearch] = useState('');
   const [animesList, setAnimesList] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [hasMoreToLoad, setHasMoreToLoad] = useState(true);
 
   useEffect(() => {
-    getAnimes();
+    getAnimes(offset, animesList);
   }, []);
 
   useEffect(() => {
     if (offset !== 0) {
-      getAnimes();
+      getAnimes(offset, animesList, handleValueToSearch());
     }
   }, [offset]);
+
+  const handleValueToSearch = () => {
+    let valueToSearch = null;
+    if (valueSearch !== '') {
+      valueToSearch = valueSearch;
+    }
+    return valueToSearch;
+  };
 
   const handleNavigate = (animeId) => {
     navigation.navigate('Anime Detail', {animeId});
   };
 
-  const getAnimes = async () => {
+  const getAnimes = async (
+    offset: number,
+    animesList: Array,
+    valueSearch = null,
+  ) => {
     try {
       const response = await getAnimeList({
         'page[limit]': API.LIMIT_QUANTITY_RESULTS,
         'page[offset]': offset,
+        'filter[text]': valueSearch,
       });
       if (response.data.data.length === 0) {
         setHasMoreToLoad(false);
@@ -74,14 +89,40 @@ export const Animes = ({navigation}) => {
   const renderFooter = () =>
     loading && <ActivityIndicator color={COLORS.DARK_GRAY} />;
 
+  const handleSearch = (text) => {
+    const lowerCaseText = text.toLowerCase();
+    setValueSearch(lowerCaseText);
+  };
+
+  const resetValues = () => {
+    setHasMoreToLoad(true);
+    setLoading(true);
+    setOffset(0);
+    setAnimesList([]);
+  };
+
+  const handleButtonSearch = () => {
+    resetValues();
+    getAnimes(0, [], handleValueToSearch());
+  };
+
   return (
     <FlatList
+      stickyHeaderIndices={[0]}
       data={animesList}
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
       style={Styles.containerFlatList}
       onEndReachedThreshold={0.01}
       onEndReached={hasMoreToLoad ? handleMoreResults : null}
+      ListHeaderComponent={
+        <SearchBar
+          value={valueSearch}
+          handleSearch={handleSearch}
+          handleButtonSearch={handleButtonSearch}
+        />
+      }
+      ListHeaderComponentStyle={Styles.headerComponent}
       ListFooterComponent={renderFooter}
       ListFooterComponentStyle={hasMoreToLoad ? Styles.footerComponent : null}
       bounces={false}
