@@ -1,26 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  Pressable,
-  FlatList,
-  ImageBackground,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import {Pressable, FlatList, ActivityIndicator} from 'react-native';
+
+// COMPONENTS
+import {CardImage} from '@components/cardImage/CardImage';
 
 // API
 import {getAnimeList} from '@networking/Animes';
 
-// STYLES
-import {GlobalStyles} from 'utils/GlobalStyles';
+// STYLES / OTHERS
 import {Styles} from './AnimesStyles';
-import {COLORS} from 'library/constants/Colors';
+import {COLORS} from '@constants/Colors';
+import {API} from '@constants/Api';
 
 export const Animes = ({navigation}) => {
-  const LIMIT_QUANTITY_RESULTS = 20;
   const [animesList, setAnimesList] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [hasMoreToLoad, setHasMoreToLoad] = useState(true);
 
   useEffect(() => {
     getAnimes();
@@ -39,15 +35,19 @@ export const Animes = ({navigation}) => {
   const getAnimes = async () => {
     try {
       const response = await getAnimeList({
-        'page[limit]': LIMIT_QUANTITY_RESULTS,
+        'page[limit]': API.LIMIT_QUANTITY_RESULTS,
         'page[offset]': offset,
       });
-      const moreResults = [...animesList, ...response.data.data];
-      setAnimesList(moreResults);
+      if (response.data.data.length === 0) {
+        setHasMoreToLoad(false);
+      } else {
+        const moreResults = [...animesList, ...response.data.data];
+        setAnimesList(moreResults);
+      }
+      setLoading(false);
     } catch (error) {
       console.log('error', error);
     }
-    setLoading(false);
   };
 
   const handleMoreResults = () => {
@@ -63,18 +63,10 @@ export const Animes = ({navigation}) => {
       <Pressable
         style={Styles.containerPressable}
         onPress={() => handleNavigate(item.id)}>
-        <ImageBackground
-          source={{uri: item.attributes.posterImage.small}}
-          imageStyle={Styles.imageBackground}
-          style={Styles.containerCard}
-          resizeMode="cover">
-          <View style={Styles.containerViewCard}>
-            <View style={Styles.overlay} />
-            <Text style={[GlobalStyles.titleCard, Styles.colorText]}>
-              {item.attributes.titles.en_jp}
-            </Text>
-          </View>
-        </ImageBackground>
+        <CardImage
+          title={item.attributes.titles.en_jp}
+          image={item.attributes.coverImage && item.attributes.coverImage.small}
+        />
       </Pressable>
     );
   };
@@ -89,9 +81,9 @@ export const Animes = ({navigation}) => {
       renderItem={renderItem}
       style={Styles.containerFlatList}
       onEndReachedThreshold={0.01}
-      onEndReached={handleMoreResults}
+      onEndReached={hasMoreToLoad ? handleMoreResults : null}
       ListFooterComponent={renderFooter}
-      ListFooterComponentStyle={Styles.footerComponent}
+      ListFooterComponentStyle={hasMoreToLoad ? Styles.footerComponent : null}
       bounces={false}
     />
   );
