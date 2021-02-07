@@ -32,8 +32,8 @@ export const Animes = ({navigation}) => {
     }
   }, [offset]);
 
-  const handleNavigate = () => {
-    navigation.navigate('Anime Detail');
+  const handleNavigate = (animeId) => {
+    navigation.navigate('Anime Detail', {animeId});
   };
 
   const getAnimes = async () => {
@@ -60,7 +60,9 @@ export const Animes = ({navigation}) => {
 
   const renderItem = ({item}) => {
     return (
-      <Pressable style={Styles.containerPressable} onPress={handleNavigate}>
+      <Pressable
+        style={Styles.containerPressable}
+        onPress={() => handleNavigate(item.id)}>
         <ImageBackground
           source={{uri: item.attributes.posterImage.small}}
           imageStyle={Styles.imageBackground}
