@@ -8,6 +8,14 @@ export const Styles = StyleSheet.create({
   containerColumn: {
     flex: 0.5,
   },
+  imageAnime: {
+    width: '100%',
+    height: 250,
+    borderRadius: 20,
+  },
+  mgTop: {
+    marginTop: 15,
+  },
   mgBottom: {
     marginBottom: 15,
   },

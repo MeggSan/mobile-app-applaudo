@@ -61,15 +61,15 @@ export const Home = () => {
   return (
     <ContainerScreens>
       {/* PRINCIPAL INFO */}
-      <View style={Styles.container}>
-        <View style={Styles.containerImage}>
+      <View style={GlobalStyles.containerTwoColumns}>
+        <View style={GlobalStyles.containerImage}>
           <Image
             style={Styles.imageProfile}
             source={IMAGES.MEGGIE_PHOTO}
             resizeMode="cover"
           />
         </View>
-        <View style={Styles.containerNameTitle}>
+        <View style={GlobalStyles.containerNameTitle}>
           <Text style={GlobalStyles.title}>{PRINCIPAL_INFO.NAME}</Text>
           <Text style={GlobalStyles.title}>{PRINCIPAL_INFO.TITLE}</Text>
         </View>
@@ -77,7 +77,7 @@ export const Home = () => {
 
       {/* PROFILE INFO */}
       <CardInformation>
-        <View style={Styles.containerTitle}>
+        <View style={GlobalStyles.containerTitle}>
           <Text style={GlobalStyles.titleCard}>{PROFILE.TITLE}</Text>
         </View>
         <Text style={GlobalStyles.text}>{PROFILE.CONTENT}</Text>
@@ -85,7 +85,7 @@ export const Home = () => {
 
       {/* PERSONAL INFORMATION */}
       <CardInformation>
-        <View style={Styles.containerTitle}>
+        <View style={GlobalStyles.containerTitle}>
           <Text style={GlobalStyles.titleCard}>{PERSONAL_INFO.TITLE}</Text>
         </View>
         <Text style={GlobalStyles.title}>
@@ -110,7 +110,7 @@ export const Home = () => {
 
       {/* PROFESSIONAL INFORMATION */}
       <CardInformation>
-        <View style={Styles.containerTitle}>
+        <View style={GlobalStyles.containerTitle}>
           <Text style={GlobalStyles.titleCard}>{PROFESSIONAL_INFO.TITLE}</Text>
         </View>
         {renderJobsList(PROFESSIONAL_INFO.NATIVAPPS)}
@@ -120,7 +120,7 @@ export const Home = () => {
 
       {/* SOFTWARE SKILLS */}
       <CardInformation>
-        <View style={Styles.containerTitle}>
+        <View style={GlobalStyles.containerTitle}>
           <Text style={GlobalStyles.titleCard}>{SOFTWARES_SKILLS.TITLE}</Text>
         </View>
         {renderInfoList(SOFTWARES_SKILLS.PROGRAMMING)}
@@ -129,7 +129,7 @@ export const Home = () => {
 
       {/* EDUCATION */}
       <CardInformation>
-        <View style={Styles.containerTitle}>
+        <View style={GlobalStyles.containerTitle}>
           <Text style={GlobalStyles.titleCard}>{EDUCATION.TITLE}</Text>
         </View>
         <Text style={GlobalStyles.title}>{EDUCATION.DEGREE.TITLE}</Text>

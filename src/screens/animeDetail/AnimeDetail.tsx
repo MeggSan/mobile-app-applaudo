@@ -46,30 +46,41 @@ export const AnimeDetail = ({route, navigation}) => {
       ) : (
         <>
           <CardImage item={anime} />
-          <Image
-            source={{uri: anime.attributes.posterImage.small}}
-            style={{width: 200, height: 200}}
-          />
-          <CardInformation>
-            <View style={Styles.containerTitle}>
-              <Text style={GlobalStyles.titleCard}>{ANIME_DETAIL.TITLES}</Text>
+
+          {/* POSTER IMAGE AND TITLES */}
+          <View style={[GlobalStyles.containerTwoColumns, Styles.mgTop]}>
+            <View style={GlobalStyles.containerImage}>
+              <Image
+                style={Styles.imageAnime}
+                source={{uri: anime.attributes.posterImage.small}}
+                resizeMode="cover"
+              />
             </View>
-            <Text style={GlobalStyles.text}>{anime.attributes.titles.en}</Text>
-            <Text style={GlobalStyles.text}>
-              {anime.attributes.titles.en_jp}
-            </Text>
-            <Text style={GlobalStyles.text}>
-              {anime.attributes.titles.ja_jp}
-            </Text>
-          </CardInformation>
+            <View style={GlobalStyles.containerNameTitle}>
+              <Text style={GlobalStyles.titleCard}>{ANIME_DETAIL.TITLES}</Text>
+              <Text style={GlobalStyles.textBold}>
+                {anime.attributes.titles.en}
+              </Text>
+              <Text style={GlobalStyles.textBold}>
+                {anime.attributes.titles.en_jp}
+              </Text>
+              <Text style={GlobalStyles.textBold}>
+                {anime.attributes.titles.ja_jp}
+              </Text>
+            </View>
+          </View>
+
+          {/* SYNOPSIS */}
           <CardInformation>
-            <View style={Styles.containerTitle}>
+            <View style={GlobalStyles.containerTitle}>
               <Text style={GlobalStyles.titleCard}>
                 {ANIME_DETAIL.SYNOPSIS}
               </Text>
             </View>
             <Text style={GlobalStyles.text}>{anime.attributes.synopsis}</Text>
           </CardInformation>
+
+          {/* POPULARITY RANK, RATING BANK, EPISODE COUNT AND EPISODE LENGTH */}
           <CardInformation>
             <View style={[Styles.containerRow, Styles.mgBottom]}>
               <View style={Styles.containerColumn}>

@@ -1,7 +1,6 @@
 import {StyleSheet} from 'react-native';
 
 // CONSTANTS
-// import {COLORS} from 'constants/Colors';
 import {FONTS} from '@constants/Fonts';
 import {FONTS_SIZES} from '@constants/FontsSizes';
 import {PALETTE} from '@constants/Palette';
@@ -41,5 +40,26 @@ export const GlobalStyles = StyleSheet.create({
       fontFamily: FONTS.METROPOLIS_SEMIBOLD,
       fontSize: FONTS_SIZES.TEXT,
     },
+  },
+  containerTitle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  containerTwoColumns: {
+    flexDirection: 'row',
+    flex: 1,
+    marginBottom: 15,
+  },
+  containerImage: {
+    ...PALETTE.shadowBox,
+    ...{
+      flex: 0.5,
+    },
+  },
+  containerNameTitle: {
+    flex: 0.5,
+    paddingLeft: 20,
+    justifyContent: 'space-evenly',
   },
 });
