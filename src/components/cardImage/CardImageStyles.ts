@@ -1,10 +1,12 @@
-import {COLORS} from 'library/constants/Colors';
-import {PALETTE} from 'library/constants/Palette';
 import {StyleSheet} from 'react-native';
+
+// CONSTANTS
+import {COLORS} from '@constants/Colors';
+import {PALETTE} from '@constants/Palette';
 
 export const Styles = StyleSheet.create({
   imageBackground: {
-    borderRadius: 20,
+    ...PALETTE.roundedBorder,
   },
   containerCard: {
     width: '100%',
@@ -21,7 +23,7 @@ export const Styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: COLORS.BLACK,
     opacity: 0.5,
-    borderRadius: 20,
+    ...PALETTE.roundedBorder,
   },
   colorText: {
     color: COLORS.WHITE,

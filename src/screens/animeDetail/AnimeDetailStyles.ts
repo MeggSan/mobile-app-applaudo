@@ -1,6 +1,8 @@
-import {COLORS} from 'library/constants/Colors';
-import {PALETTE} from 'library/constants/Palette';
 import {StyleSheet} from 'react-native';
+
+// CONSTANTS
+import {COLORS} from '@constants/Colors';
+import {PALETTE} from '@constants/Palette';
 
 export const Styles = StyleSheet.create({
   containerRow: {
@@ -13,7 +15,7 @@ export const Styles = StyleSheet.create({
   imageAnime: {
     width: '100%',
     height: 250,
-    borderRadius: 20,
+    ...PALETTE.roundedBorder,
     backgroundColor: COLORS.LIGHT_GRAY,
   },
   mgTop: {

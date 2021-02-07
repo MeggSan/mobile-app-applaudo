@@ -1,4 +1,4 @@
-import {api} from 'library/networking/Axios';
+import {api} from '@networking/Axios';
 
 const URL = 'anime';
 

@@ -4,7 +4,6 @@ import {COLORS} from '@constants/Colors';
 export const PALETTE = StyleSheet.create({
   wrapText: {
     flexShrink: 1,
-    lineHeight: 20,
   },
   shadowBox: {
     ...Platform.select({
@@ -21,5 +20,8 @@ export const PALETTE = StyleSheet.create({
         elevation: 8,
       },
     }),
+  },
+  roundedBorder: {
+    borderRadius: 15,
   },
 });
