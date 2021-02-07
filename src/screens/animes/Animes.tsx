@@ -1,20 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  Pressable,
-  FlatList,
-  ImageBackground,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import {Pressable, FlatList, ActivityIndicator} from 'react-native';
+
+// COMPONENTS
+import {CardImage} from '@components/cardImage/CardImage';
 
 // API
 import {getAnimeList} from '@networking/Animes';
 
-// STYLES
-import {GlobalStyles} from 'utils/GlobalStyles';
+// STYLES / OTHERS
 import {Styles} from './AnimesStyles';
-import {COLORS} from 'library/constants/Colors';
+import {COLORS} from '@constants/Colors';
 
 export const Animes = ({navigation}) => {
   const LIMIT_QUANTITY_RESULTS = 20;
@@ -63,18 +58,7 @@ export const Animes = ({navigation}) => {
       <Pressable
         style={Styles.containerPressable}
         onPress={() => handleNavigate(item.id)}>
-        <ImageBackground
-          source={{uri: item.attributes.posterImage.small}}
-          imageStyle={Styles.imageBackground}
-          style={Styles.containerCard}
-          resizeMode="cover">
-          <View style={Styles.containerViewCard}>
-            <View style={Styles.overlay} />
-            <Text style={[GlobalStyles.titleCard, Styles.colorText]}>
-              {item.attributes.titles.en_jp}
-            </Text>
-          </View>
-        </ImageBackground>
+        <CardImage item={item} />
       </Pressable>
     );
   };
