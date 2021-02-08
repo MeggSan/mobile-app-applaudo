@@ -15,13 +15,13 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* mobileAppApplaudoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobileAppApplaudoTests.m */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		4A7063DB8F3144A599835D91 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */; };
+		5951D12825D1F40C00472FD6 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5951D12725D1F40C00472FD6 /* BootSplash.storyboard */; };
 		9095793E78159384737A5133 /* libPods-mobileAppApplaudo-mobileAppApplaudoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75267D3B90A2BBF0EE767B99 /* libPods-mobileAppApplaudo-mobileAppApplaudoTests.a */; };
 		B57D5BA49B3B8D5E92F10DB5 /* libPods-mobileAppApplaudo-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7203D98FA8905BA98A2A7E08 /* libPods-mobileAppApplaudo-tvOSTests.a */; };
 		C182E51CE4F370FCF7D0F21F /* libPods-mobileAppApplaudo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1645D18799EE17CBEC4A6B7A /* libPods-mobileAppApplaudo-tvOS.a */; };
-		F0EDC36F34EA0AE64E30CF35 /* libPods-mobileAppApplaudo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A906405E79EB56D041332EDF /* libPods-mobileAppApplaudo.a */; };
-		4A7063DB8F3144A599835D91 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */; };
 		D0F8D9EEB1814076B8054170 /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */; };
+		F0EDC36F34EA0AE64E30CF35 /* libPods-mobileAppApplaudo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A906405E79EB56D041332EDF /* libPods-mobileAppApplaudo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,22 +46,24 @@
 		00E356EE1AD99517003FC87E /* mobileAppApplaudoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mobileAppApplaudoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* mobileAppApplaudoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mobileAppApplaudoTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* mobileAppApplaudo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mobileAppApplaudo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* MS Kitsu App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MS Kitsu App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = mobileAppApplaudo/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = mobileAppApplaudo/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = mobileAppApplaudo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = mobileAppApplaudo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = mobileAppApplaudo/main.m; sourceTree = "<group>"; };
+		14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-SemiBold.otf"; path = "../src/assets/fonts/metropolis/Metropolis-SemiBold.otf"; sourceTree = "<group>"; };
 		1645D18799EE17CBEC4A6B7A /* libPods-mobileAppApplaudo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileAppApplaudo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21CA3B3A93A20C8EB5528082 /* Pods-mobileAppApplaudo-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo-tvOS.release.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo-tvOS/Pods-mobileAppApplaudo-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		2713D5BCD8ADC4FB84171B4D /* Pods-mobileAppApplaudo-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo-tvOSTests/Pods-mobileAppApplaudo-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* mobileAppApplaudo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mobileAppApplaudo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* mobileAppApplaudo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobileAppApplaudo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Regular.otf"; path = "../src/assets/fonts/metropolis/Metropolis-Regular.otf"; sourceTree = "<group>"; };
 		589D0E9B3B50453620444804 /* Pods-mobileAppApplaudo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo.release.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo/Pods-mobileAppApplaudo.release.xcconfig"; sourceTree = "<group>"; };
+		5951D12725D1F40C00472FD6 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = mobileAppApplaudo/BootSplash.storyboard; sourceTree = "<group>"; };
 		7203D98FA8905BA98A2A7E08 /* libPods-mobileAppApplaudo-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileAppApplaudo-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		75267D3B90A2BBF0EE767B99 /* libPods-mobileAppApplaudo-mobileAppApplaudoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileAppApplaudo-mobileAppApplaudoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A3D06FF901F8B527603D582 /* Pods-mobileAppApplaudo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo-tvOS/Pods-mobileAppApplaudo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mobileAppApplaudo/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A906405E79EB56D041332EDF /* libPods-mobileAppApplaudo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileAppApplaudo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1F1A876C6EE11E760EFF340 /* Pods-mobileAppApplaudo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo.debug.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo/Pods-mobileAppApplaudo.debug.xcconfig"; sourceTree = "<group>"; };
 		B669EA592A45B6DDCA4B295A /* Pods-mobileAppApplaudo-mobileAppApplaudoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo-mobileAppApplaudoTests.release.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo-mobileAppApplaudoTests/Pods-mobileAppApplaudo-mobileAppApplaudoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -69,8 +71,6 @@
 		DB1350DB0642D3291E2DB133 /* Pods-mobileAppApplaudo-mobileAppApplaudoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileAppApplaudo-mobileAppApplaudoTests.debug.xcconfig"; path = "Target Support Files/Pods-mobileAppApplaudo-mobileAppApplaudoTests/Pods-mobileAppApplaudo-mobileAppApplaudoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */ = {isa = PBXFileReference; name = "Metropolis-Regular.otf"; path = "../src/assets/fonts/metropolis/Metropolis-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */ = {isa = PBXFileReference; name = "Metropolis-SemiBold.otf"; path = "../src/assets/fonts/metropolis/Metropolis-SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +134,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				5951D12725D1F40C00472FD6 /* BootSplash.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = mobileAppApplaudo;
@@ -151,6 +151,15 @@
 				7203D98FA8905BA98A2A7E08 /* libPods-mobileAppApplaudo-tvOSTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6A5F869979DD4317BB5DB420 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */,
+				14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -179,7 +188,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* mobileAppApplaudo.app */,
+				13B07F961A680F5B00A75B9A /* MS Kitsu App.app */,
 				00E356EE1AD99517003FC87E /* mobileAppApplaudoTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* mobileAppApplaudo-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* mobileAppApplaudo-tvOSTests.xctest */,
@@ -199,19 +208,8 @@
 				2713D5BCD8ADC4FB84171B4D /* Pods-mobileAppApplaudo-tvOSTests.debug.xcconfig */,
 				CDA6C4ED8402F3CF3556D9EE /* Pods-mobileAppApplaudo-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		6A5F869979DD4317BB5DB420 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				4AEC1DA77D014EF893978D63 /* Metropolis-Regular.otf */,
-				14C93A1BC186411AAEFE5EF4 /* Metropolis-SemiBold.otf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -254,7 +252,7 @@
 			);
 			name = mobileAppApplaudo;
 			productName = mobileAppApplaudo;
-			productReference = 13B07F961A680F5B00A75B9A /* mobileAppApplaudo.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* MS Kitsu App.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* mobileAppApplaudo-tvOS */ = {
@@ -355,7 +353,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				5951D12825D1F40C00472FD6 /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				4A7063DB8F3144A599835D91 /* Metropolis-Regular.otf in Resources */,
 				D0F8D9EEB1814076B8054170 /* Metropolis-SemiBold.otf in Resources */,
@@ -690,7 +688,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = mobileAppApplaudo;
+				PRODUCT_NAME = "MS Kitsu App";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -712,7 +710,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = mobileAppApplaudo;
+				PRODUCT_NAME = "MS Kitsu App";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
