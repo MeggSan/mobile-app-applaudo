@@ -24,7 +24,7 @@ export const SearchBar = ({value, handleSearch, handleButtonSearch}) => {
         </View>
       </View>
       <View style={Styles.buttonContainer}>
-        <Button onPress={handleButtonSearch} text={'Search'} />
+        <Button onPress={handleButtonSearch} text={ANIMES.BUTTON_SEARCH} />
       </View>
     </View>
   );

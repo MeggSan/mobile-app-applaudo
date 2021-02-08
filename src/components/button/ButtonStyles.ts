@@ -6,11 +6,13 @@ import {PALETTE} from '@constants/Palette';
 
 export const Styles = StyleSheet.create({
   containerButton: {
-    backgroundColor: COLORS.PRIMARY,
     padding: 15,
     borderWidth: 1,
-    borderColor: COLORS.GREEN,
     ...PALETTE.shadowBox,
     ...PALETTE.roundedBorder,
+  },
+  colorButton: {
+    backgroundColor: COLORS.PRIMARY,
+    borderColor: COLORS.GREEN,
   },
 });
