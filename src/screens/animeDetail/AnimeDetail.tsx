@@ -240,6 +240,7 @@ export const AnimeDetail = ({route, navigation}) => {
       );
       const valueStr = JSON.stringify(newFavoritesArray);
       await AsyncStorage.setItem(ASYNC_STORAGE_VALUES.ANIMES, valueStr);
+      setFavorites(newFavoritesArray);
       setInFavorites(false);
     } catch (e) {
       // remove error

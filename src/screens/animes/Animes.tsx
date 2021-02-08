@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, FlatList, ActivityIndicator} from 'react-native';
+import {FlatList, ActivityIndicator} from 'react-native';
 
 // COMPONENTS
-import {CardImage} from '@components/cardImage/CardImage';
 import {SearchBar} from '@components/searchBar/SearchBar';
+import {PressableCardImage} from '@components/pressableCardImage/PressableCardImage';
 
 // API
 import {getAnimeList} from '@networking/Animes';
 
 // STYLES / OTHERS
+import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './AnimesStyles';
 import {COLORS} from '@constants/Colors';
 import {API} from '@constants/Api';
@@ -73,19 +74,6 @@ export const Animes = ({navigation}) => {
     }
   };
 
-  const renderItem = ({item}) => {
-    return (
-      <Pressable
-        style={Styles.containerPressable}
-        onPress={() => handleNavigate(item.id)}>
-        <CardImage
-          title={item.attributes.titles.en_jp}
-          image={item.attributes.coverImage && item.attributes.coverImage.small}
-        />
-      </Pressable>
-    );
-  };
-
   const renderFooter = () =>
     loading && <ActivityIndicator color={COLORS.DARK_GRAY} />;
 
@@ -111,8 +99,14 @@ export const Animes = ({navigation}) => {
       stickyHeaderIndices={[0]}
       data={animesList}
       keyExtractor={(item) => item.id}
-      renderItem={renderItem}
-      style={Styles.containerFlatList}
+      renderItem={({item}) => (
+        <PressableCardImage
+          handleNavigate={() => handleNavigate(item.id)}
+          title={item.attributes.titles.en_jp}
+          image={item.attributes.coverImage && item.attributes.coverImage.small}
+        />
+      )}
+      style={GlobalStyles.containerFlatList}
       onEndReachedThreshold={0.01}
       onEndReached={hasMoreToLoad ? handleMoreResults : null}
       ListHeaderComponent={

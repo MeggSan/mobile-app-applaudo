@@ -50,4 +50,7 @@ export const GlobalStyles = StyleSheet.create({
     paddingLeft: 20,
     justifyContent: 'space-evenly',
   },
+  containerFlatList: {
+    margin: 20,
+  },
 });
