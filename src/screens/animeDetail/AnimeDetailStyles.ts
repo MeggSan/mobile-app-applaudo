@@ -38,4 +38,11 @@ export const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  containerFavorites: {
+    marginVertical: 15,
+  },
+  colorRemoveButton: {
+    backgroundColor: COLORS.RED,
+    borderColor: COLORS.DARK_RED,
+  },
 });

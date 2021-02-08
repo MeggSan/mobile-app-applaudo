@@ -7,6 +7,7 @@ import {
   Linking,
   FlatList,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
@@ -26,9 +27,8 @@ import {
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './AnimeDetailStyles';
 import {COLORS} from '@constants/Colors';
-import {ANIME_DETAIL} from '@constants/Strings';
+import {ANIME_DETAIL, ASYNC_STORAGE_VALUES} from '@constants/Strings';
 import {API} from '@constants/Api';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 export const AnimeDetail = ({route, navigation}) => {
   const {animeId} = route.params;
@@ -43,8 +43,11 @@ export const AnimeDetail = ({route, navigation}) => {
   const [loadingCharacters, setLoadingCharacters] = useState(true);
   const [hasMoreToLoadEpisodes, setHasMoreToLoadEpisodes] = useState(true);
   const [hasMoreToLoadCharacters, setHasMoreToLoadCharacters] = useState(true);
+  const [favorites, setFavorites] = useState([]);
+  const [inFavorites, setInFavorites] = useState(false);
 
   useEffect(() => {
+    getFavorites();
     getAnime();
     getAnimeEpisodes();
     getAnimeCharacters();
@@ -120,10 +123,6 @@ export const AnimeDetail = ({route, navigation}) => {
     } catch (error) {
       console.log('error', error);
     }
-  };
-
-  const handleNavigate = () => {
-    navigation.navigate('Favorites');
   };
 
   const handleOpenYoutube = () => {
@@ -204,6 +203,57 @@ export const AnimeDetail = ({route, navigation}) => {
 
   const renderFooter = (loading: boolean) =>
     loading && <ActivityIndicator color={COLORS.DARK_GRAY} />;
+
+  const storeFavorite = async () => {
+    try {
+      let favoritesTemp = [...favorites, anime];
+      const valueStr = JSON.stringify(favoritesTemp);
+      await AsyncStorage.setItem(ASYNC_STORAGE_VALUES.ANIMES, valueStr);
+      setInFavorites(true);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const getFavorites = async () => {
+    try {
+      const value = await AsyncStorage.getItem(ASYNC_STORAGE_VALUES.ANIMES);
+      if (value !== null) {
+        const favoritesValue = JSON.parse(value);
+        setFavorites(favoritesValue);
+        const findFavorite = favoritesValue.find(
+          (favorite) => favorite.id === animeId,
+        );
+        if (findFavorite) {
+          setInFavorites(true);
+        }
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const removeFavorite = async () => {
+    try {
+      const newFavoritesArray = favorites.filter(
+        (favorite) => favorite.id !== animeId,
+      );
+      const valueStr = JSON.stringify(newFavoritesArray);
+      await AsyncStorage.setItem(ASYNC_STORAGE_VALUES.ANIMES, valueStr);
+      setFavorites(newFavoritesArray);
+      setInFavorites(false);
+    } catch (e) {
+      // remove error
+    }
+  };
+
+  const handleAddFavorite = () => {
+    storeFavorite();
+  };
+
+  const handleRemoveFavorite = () => {
+    removeFavorite();
+  };
 
   return (
     <ContainerScreens>
@@ -319,11 +369,21 @@ export const AnimeDetail = ({route, navigation}) => {
                 renderItemCharacter,
                 loadingCharacters,
               )}
+
+            {/* ADD FAVORITE */}
+            <View style={Styles.containerFavorites}>
+              <Button
+                onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
+                text={
+                  inFavorites
+                    ? ANIME_DETAIL.REMOVE_FAVORITE
+                    : ANIME_DETAIL.ADD_FAVORITE
+                }
+                colorButton={inFavorites && Styles.colorRemoveButton}
+              />
+            </View>
           </>
         )}
-        {/* <Pressable onPress={handleNavigate}>
-        <Text>Go to Favorites</Text>
-      </Pressable> */}
       </View>
     </ContainerScreens>
   );

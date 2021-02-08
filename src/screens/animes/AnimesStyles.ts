@@ -15,9 +15,6 @@ export const Styles = StyleSheet.create({
   imageBackground: {
     ...PALETTE.roundedBorder,
   },
-  containerFlatList: {
-    margin: 20,
-  },
   colorText: {
     color: COLORS.WHITE,
     textAlign: 'center',
