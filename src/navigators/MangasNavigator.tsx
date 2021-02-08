@@ -11,12 +11,12 @@ import {ROUTES} from '@constants/Strings';
 
 const Stack = createStackNavigator();
 
-export const AnimesNavigator = () => {
+export const MangasNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={ROUTES.ANIMES}>
-      <Stack.Screen name={ROUTES.ANIMES} component={List} />
-      <Stack.Screen name={ROUTES.ANIME_DETAIL} component={Detail} />
-      <Stack.Screen name={ROUTES.ANIME_FAVORITES} component={Favorites} />
+    <Stack.Navigator initialRouteName={ROUTES.MANGAS}>
+      <Stack.Screen name={ROUTES.MANGAS} component={List} />
+      <Stack.Screen name={ROUTES.MANGA_DETAIL} component={Detail} />
+      <Stack.Screen name={ROUTES.MANGA_FAVORITES} component={Favorites} />
     </Stack.Navigator>
   );
 };

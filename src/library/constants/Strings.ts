@@ -125,13 +125,15 @@ export const EDUCATION = {
   },
 };
 
-export const ANIME_DETAIL = {
+export const DETAIL = {
   SYNOPSIS: 'SYNOPSIS',
   TITLES: 'TITLES',
   POPULARITY_RANK: 'POPULARITY RANK',
   RATING_RANK: 'RATING RANK',
   EPISODE_COUNT: 'EPISODE COUNT',
   EPISODE_LENGTH: 'EPISODE LENGTH',
+  CHAPTER_COUNT: 'CHAPTER COUNT',
+  VOLUME_COUNT: 'VOLUME COUNT',
   YOUTUBE_LINK: 'SEE YOUTUBE VIDEO LINK',
   EPISODES: 'EPISODES',
   CHARACTERS: 'CHARACTERS',
@@ -139,11 +141,24 @@ export const ANIME_DETAIL = {
   REMOVE_FAVORITE: 'REMOVE FAVORITE',
 };
 
-export const ANIMES = {
-  SEARCH_PLACEHOLDER: 'Search your favorite animes',
+export const LIST = {
+  SEARCH_PLACEHOLDER: 'Search your favorite',
+  SEARCH_ANIMES: 'animes',
+  SEARCH_MANGAS: 'mangas',
   BUTTON_SEARCH: 'SEARCH',
 };
 
 export const ASYNC_STORAGE_VALUES = {
   ANIMES: 'ANIMES_FAVORITES',
+  MANGAS: 'MANGAS_FAVORITES',
+};
+
+export const ROUTES = {
+  HOME: 'Home',
+  ANIMES: 'Animes',
+  MANGAS: 'Mangas',
+  ANIME_DETAIL: 'Anime Detail',
+  MANGA_DETAIL: 'Manga Detail',
+  ANIME_FAVORITES: 'Anime Favorites',
+  MANGA_FAVORITES: 'Manga Favorites',
 };
