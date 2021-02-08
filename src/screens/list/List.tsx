@@ -7,27 +7,38 @@ import {PressableCardImage} from '@components/pressableCardImage/PressableCardIm
 
 // API
 import {getAnimeList} from '@networking/Animes';
+import {getMangaList} from '@networking/Mangas';
 
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './AnimesStyles';
+import {Styles} from './ListStyles';
 import {COLORS} from '@constants/Colors';
 import {API} from '@constants/Api';
+import {LIST, ROUTES} from '@constants/Strings';
 
-export const Animes = ({navigation}) => {
+export const List = ({route, navigation}) => {
   const [valueSearch, setValueSearch] = useState('');
-  const [animesList, setAnimesList] = useState([]);
+  const [arrayList, setArrayList] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [hasMoreToLoad, setHasMoreToLoad] = useState(true);
 
   useEffect(() => {
-    getAnimes(offset, animesList);
+    getList(
+      route.name === ROUTES.ANIMES ? getAnimeList : getMangaList,
+      offset,
+      arrayList,
+    );
   }, []);
 
   useEffect(() => {
     if (offset !== 0) {
-      getAnimes(offset, animesList, handleValueToSearch());
+      getList(
+        route.name === ROUTES.ANIMES ? getAnimeList : getMangaList,
+        offset,
+        arrayList,
+        handleValueToSearch(),
+      );
     }
   }, [offset]);
 
@@ -39,17 +50,21 @@ export const Animes = ({navigation}) => {
     return valueToSearch;
   };
 
-  const handleNavigate = (animeId) => {
-    navigation.navigate('Anime Detail', {animeId});
+  const handleNavigate = (detailId: number) => {
+    navigation.navigate(
+      route.name === ROUTES.ANIMES ? ROUTES.ANIME_DETAIL : ROUTES.MANGA_DETAIL,
+      {detailId},
+    );
   };
 
-  const getAnimes = async (
+  const getList = async (
+    getApi,
     offset: number,
-    animesList: Array,
+    arrayList: Array,
     valueSearch = null,
   ) => {
     try {
-      const response = await getAnimeList({
+      const response = await getApi({
         'page[limit]': API.LIMIT_QUANTITY_RESULTS,
         'page[offset]': offset,
         'filter[text]': valueSearch,
@@ -57,8 +72,8 @@ export const Animes = ({navigation}) => {
       if (response.data.data.length === 0) {
         setHasMoreToLoad(false);
       } else {
-        const moreResults = [...animesList, ...response.data.data];
-        setAnimesList(moreResults);
+        const moreResults = [...arrayList, ...response.data.data];
+        setArrayList(moreResults);
       }
       setLoading(false);
     } catch (error) {
@@ -86,24 +101,37 @@ export const Animes = ({navigation}) => {
     setHasMoreToLoad(true);
     setLoading(true);
     setOffset(0);
-    setAnimesList([]);
+    setArrayList([]);
   };
 
   const handleButtonSearch = () => {
     resetValues();
-    getAnimes(0, [], handleValueToSearch());
+    getList(
+      route.name === ROUTES.ANIMES ? getAnimeList : getMangaList,
+      0,
+      [],
+      handleValueToSearch(),
+    );
   };
 
   return (
     <FlatList
       stickyHeaderIndices={[0]}
-      data={animesList}
+      data={arrayList}
       keyExtractor={(item) => item.id}
-      renderItem={({item}) => (
+      renderItem={({item: {id, attributes}}) => (
         <PressableCardImage
-          handleNavigate={() => handleNavigate(item.id)}
-          title={item.attributes.titles.en_jp}
-          image={item.attributes.coverImage && item.attributes.coverImage.small}
+          handleNavigate={() => handleNavigate(id)}
+          title={
+            attributes.titles.en
+              ? attributes.titles.en
+              : attributes.titles.en_jp
+          }
+          image={
+            attributes.coverImage
+              ? attributes.coverImage.small
+              : attributes.posterImage.small
+          }
         />
       )}
       style={GlobalStyles.containerFlatList}
@@ -114,6 +142,11 @@ export const Animes = ({navigation}) => {
           value={valueSearch}
           handleSearch={handleSearch}
           handleButtonSearch={handleButtonSearch}
+          placeholder={
+            route.name === ROUTES.ANIMES
+              ? LIST.SEARCH_ANIMES
+              : LIST.SEARCH_MANGAS
+          }
         />
       }
       ListHeaderComponentStyle={Styles.headerComponent}

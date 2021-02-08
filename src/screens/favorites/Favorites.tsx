@@ -9,9 +9,9 @@ import {PressableCardImage} from '@components/pressableCardImage/PressableCardIm
 // STYLES
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './FavoritesStyles';
-import {ASYNC_STORAGE_VALUES} from '@constants/Strings';
+import {ASYNC_STORAGE_VALUES, ROUTES} from '@constants/Strings';
 
-export const Favorites = ({navigation}) => {
+export const Favorites = ({route, navigation}) => {
   const [favorites, setFavorites] = useState([]);
 
   useFocusEffect(
@@ -22,7 +22,11 @@ export const Favorites = ({navigation}) => {
 
   const getFavorites = async () => {
     try {
-      const value = await AsyncStorage.getItem(ASYNC_STORAGE_VALUES.ANIMES);
+      const value = await AsyncStorage.getItem(
+        route.name === ROUTES.ANIME_FAVORITES
+          ? ASYNC_STORAGE_VALUES.ANIMES
+          : ASYNC_STORAGE_VALUES.MANGAS,
+      );
       if (value !== null) {
         const favoritesValue = JSON.parse(value);
         setFavorites(favoritesValue);
@@ -32,19 +36,32 @@ export const Favorites = ({navigation}) => {
     }
   };
 
-  const handleNavigate = (animeId) => {
-    navigation.navigate('Anime Detail', {animeId});
+  const handleNavigate = (detailId) => {
+    navigation.navigate(
+      route.name === ROUTES.ANIME_FAVORITES
+        ? ROUTES.ANIME_DETAIL
+        : ROUTES.MANGA_DETAIL,
+      {detailId},
+    );
   };
 
   return (
     <FlatList
       data={favorites}
       keyExtractor={(item) => item.id}
-      renderItem={({item}) => (
+      renderItem={({item: {id, attributes}}) => (
         <PressableCardImage
-          handleNavigate={() => handleNavigate(item.id)}
-          title={item.attributes.titles.en_jp}
-          image={item.attributes.coverImage && item.attributes.coverImage.small}
+          handleNavigate={() => handleNavigate(id)}
+          title={
+            attributes.titles.en
+              ? attributes.titles.en
+              : attributes.titles.en_jp
+          }
+          image={
+            attributes.coverImage
+              ? attributes.coverImage.small
+              : attributes.posterImage.small
+          }
         />
       )}
       style={GlobalStyles.containerFlatList}

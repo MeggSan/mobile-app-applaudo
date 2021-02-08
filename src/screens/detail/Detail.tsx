@@ -23,19 +23,27 @@ import {
   getAnimeCharacterDetail,
 } from '@networking/Animes';
 
+// API
+import {
+  getMangaDetail,
+  getMangaChaptersList,
+  getMangaCharactersList,
+  getMangaCharacterDetail,
+} from '@networking/Mangas';
+
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './AnimeDetailStyles';
+import {Styles} from './DetailStyles';
 import {COLORS} from '@constants/Colors';
-import {ANIME_DETAIL, ASYNC_STORAGE_VALUES} from '@constants/Strings';
+import {DETAIL, ASYNC_STORAGE_VALUES, ROUTES} from '@constants/Strings';
 import {API} from '@constants/Api';
 
-export const AnimeDetail = ({route, navigation}) => {
-  const {animeId} = route.params;
-  const [anime, setAnime] = useState(null);
-  const [animeEpisodes, setAnimeEpisodes] = useState([]);
-  const [animeCharacters, setAnimeCharacters] = useState([]);
-  const [animeCharactersDetails, setAnimeCharactersDetails] = useState([]);
+export const Detail = ({route, navigation}) => {
+  const {detailId} = route.params;
+  const [detail, setDetail] = useState(null);
+  const [episodes, setEpisodes] = useState([]);
+  const [characters, setCharacters] = useState([]);
+  const [charactersDetails, setCharactersDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [offsetEpisodes, setOffsetEpisodes] = useState(0);
   const [offsetCharacters, setOffsetCharacters] = useState(0);
@@ -48,44 +56,62 @@ export const AnimeDetail = ({route, navigation}) => {
 
   useEffect(() => {
     getFavorites();
-    getAnime();
-    getAnimeEpisodes();
-    getAnimeCharacters();
+    getDetail(
+      route.name === ROUTES.ANIME_DETAIL ? getAnimeDetail : getMangaDetail,
+    );
+    getEpisodes(
+      route.name === ROUTES.ANIME_DETAIL
+        ? getAnimeEpisodesList
+        : getMangaChaptersList,
+    );
+    getCharacters(
+      route.name === ROUTES.ANIME_DETAIL
+        ? getAnimeCharactersList
+        : getMangaCharactersList,
+    );
   }, []);
 
   useEffect(() => {
     if (offsetEpisodes !== 0) {
-      getAnimeEpisodes();
+      getEpisodes(
+        route.name === ROUTES.ANIME_DETAIL
+          ? getAnimeEpisodesList
+          : getMangaChaptersList,
+      );
     }
   }, [offsetEpisodes]);
 
   useEffect(() => {
     if (offsetCharacters !== 0) {
-      getAnimeCharacters();
+      getCharacters(
+        route.name === ROUTES.ANIME_DETAIL
+          ? getAnimeCharactersList
+          : getMangaCharactersList,
+      );
     }
   }, [offsetCharacters]);
 
-  const getAnime = async () => {
+  const getDetail = async (getApi) => {
     try {
-      const response = await getAnimeDetail(animeId);
-      setAnime(response.data.data);
+      const response = await getApi(detailId);
+      setDetail(response.data.data);
       setLoading(false);
     } catch (error) {
       console.log('error', error);
     }
   };
 
-  const getAnimeEpisodes = async () => {
+  const getEpisodes = async (getApi) => {
     try {
-      const response = await getAnimeEpisodesList(animeId, {
+      const response = await getApi(detailId, {
         'page[limit]': API.LIMIT_QUANTITY_RESULTS,
         'page[offset]': offsetEpisodes,
       });
       if (response.data.data.length === 0) {
         setHasMoreToLoadEpisodes(false);
       } else {
-        const moreResults = [...animeEpisodes, ...response.data.data];
-        setAnimeEpisodes(moreResults);
+        const moreResults = [...episodes, ...response.data.data];
+        setEpisodes(moreResults);
       }
       setLoadingEpisodes(false);
     } catch (error) {
@@ -93,9 +119,9 @@ export const AnimeDetail = ({route, navigation}) => {
     }
   };
 
-  const getAnimeCharacters = async () => {
+  const getCharacters = async (getApi) => {
     try {
-      const response = await getAnimeCharactersList(animeId, {
+      const response = await getApi(detailId, {
         'page[limit]': API.LIMIT_QUANTITY_RESULTS,
         'page[offset]': offsetCharacters,
       });
@@ -103,21 +129,22 @@ export const AnimeDetail = ({route, navigation}) => {
         setHasMoreToLoadCharacters(false);
       } else {
         const results = response.data.data;
-        const moreResults = [...animeCharacters, ...results];
-        setAnimeCharacters(moreResults);
+        const moreResults = [...characters, ...results];
+        setCharacters(moreResults);
         const promises = [];
-        const animeCharactersResults = [];
+        const charactersResults = [];
+        const get =
+          route.name === ROUTES.ANIME_DETAIL
+            ? getAnimeCharacterDetail
+            : getMangaCharacterDetail;
         for (let i = 0; i < results.length; i++) {
-          promises.push(getAnimeCharacterDetail(results[i].id));
+          promises.push(get(results[i].id));
         }
         const finalResults = await Promise.all(promises);
         finalResults.forEach((result) => {
-          animeCharactersResults.push(result.data.data);
+          charactersResults.push(result.data.data);
         });
-        setAnimeCharactersDetails([
-          ...animeCharactersDetails,
-          ...animeCharactersResults,
-        ]);
+        setCharactersDetails([...charactersDetails, ...charactersResults]);
       }
       setLoadingCharacters(false);
     } catch (error) {
@@ -127,7 +154,7 @@ export const AnimeDetail = ({route, navigation}) => {
 
   const handleOpenYoutube = () => {
     Linking.openURL(
-      `https://www.youtube.com/watch?v=${anime.attributes.youtubeVideoId}`,
+      `https://www.youtube.com/watch?v=${detail.attributes.youtubeVideoId}`,
     );
   };
 
@@ -206,9 +233,14 @@ export const AnimeDetail = ({route, navigation}) => {
 
   const storeFavorite = async () => {
     try {
-      let favoritesTemp = [...favorites, anime];
+      let favoritesTemp = [...favorites, detail];
       const valueStr = JSON.stringify(favoritesTemp);
-      await AsyncStorage.setItem(ASYNC_STORAGE_VALUES.ANIMES, valueStr);
+      await AsyncStorage.setItem(
+        route.name === ROUTES.ANIME_DETAIL
+          ? ASYNC_STORAGE_VALUES.ANIMES
+          : ASYNC_STORAGE_VALUES.MANGAS,
+        valueStr,
+      );
       setInFavorites(true);
     } catch (error) {
       console.log('error', error);
@@ -217,12 +249,16 @@ export const AnimeDetail = ({route, navigation}) => {
 
   const getFavorites = async () => {
     try {
-      const value = await AsyncStorage.getItem(ASYNC_STORAGE_VALUES.ANIMES);
+      const value = await AsyncStorage.getItem(
+        route.name === ROUTES.ANIME_DETAIL
+          ? ASYNC_STORAGE_VALUES.ANIMES
+          : ASYNC_STORAGE_VALUES.MANGAS,
+      );
       if (value !== null) {
         const favoritesValue = JSON.parse(value);
         setFavorites(favoritesValue);
         const findFavorite = favoritesValue.find(
-          (favorite) => favorite.id === animeId,
+          (favorite) => favorite.id === detailId,
         );
         if (findFavorite) {
           setInFavorites(true);
@@ -236,10 +272,15 @@ export const AnimeDetail = ({route, navigation}) => {
   const removeFavorite = async () => {
     try {
       const newFavoritesArray = favorites.filter(
-        (favorite) => favorite.id !== animeId,
+        (favorite) => favorite.id !== detailId,
       );
       const valueStr = JSON.stringify(newFavoritesArray);
-      await AsyncStorage.setItem(ASYNC_STORAGE_VALUES.ANIMES, valueStr);
+      await AsyncStorage.setItem(
+        route.name === ROUTES.ANIME_DETAIL
+          ? ASYNC_STORAGE_VALUES.ANIMES
+          : ASYNC_STORAGE_VALUES.MANGAS,
+        valueStr,
+      );
       setFavorites(newFavoritesArray);
       setInFavorites(false);
     } catch (e) {
@@ -264,9 +305,10 @@ export const AnimeDetail = ({route, navigation}) => {
           <>
             {/* COVER IMAGE */}
             <CardImage
-              title={anime.attributes.titles.en_jp}
+              title={detail.attributes.titles.en_jp}
               image={
-                anime.attributes.coverImage && anime.attributes.coverImage.small
+                detail.attributes.coverImage &&
+                detail.attributes.coverImage.small
               }
             />
 
@@ -275,36 +317,38 @@ export const AnimeDetail = ({route, navigation}) => {
               <View style={GlobalStyles.containerImage}>
                 <Image
                   style={Styles.imageAnime}
-                  source={{uri: anime.attributes.posterImage.small}}
+                  source={{uri: detail.attributes.posterImage.small}}
                   resizeMode="cover"
                 />
               </View>
               <View style={GlobalStyles.containerNameTitle}>
-                <Text style={GlobalStyles.titleCard}>
-                  {ANIME_DETAIL.TITLES}
-                </Text>
-                {anime.attributes.titles.en && (
+                <Text style={GlobalStyles.titleCard}>{DETAIL.TITLES}</Text>
+                {detail.attributes.titles.en && (
                   <Text style={GlobalStyles.textBold}>
-                    {anime.attributes.titles.en}
+                    {detail.attributes.titles.en}
                   </Text>
                 )}
-                <Text style={GlobalStyles.textBold}>
-                  {anime.attributes.titles.en_jp}
-                </Text>
-                <Text style={GlobalStyles.textBold}>
-                  {anime.attributes.titles.ja_jp}
-                </Text>
+                {detail.attributes.titles.en_jp && (
+                  <Text style={GlobalStyles.textBold}>
+                    {detail.attributes.titles.en_jp}
+                  </Text>
+                )}
+                {detail.attributes.titles.ja_jp && (
+                  <Text style={GlobalStyles.textBold}>
+                    {detail.attributes.titles.ja_jp}
+                  </Text>
+                )}
               </View>
             </View>
 
             {/* SYNOPSIS */}
             <CardInformation>
               <View style={GlobalStyles.containerTitle}>
-                <Text style={GlobalStyles.titleCard}>
-                  {ANIME_DETAIL.SYNOPSIS}
-                </Text>
+                <Text style={GlobalStyles.titleCard}>{DETAIL.SYNOPSIS}</Text>
               </View>
-              <Text style={GlobalStyles.text}>{anime.attributes.synopsis}</Text>
+              <Text style={GlobalStyles.text}>
+                {detail.attributes.synopsis}
+              </Text>
             </CardInformation>
 
             {/* POPULARITY RANK, RATING BANK, EPISODE COUNT AND EPISODE LENGTH */}
@@ -312,47 +356,59 @@ export const AnimeDetail = ({route, navigation}) => {
               <View style={[Styles.containerRow, Styles.mgBottom]}>
                 <View style={Styles.containerColumn}>
                   <Text style={GlobalStyles.subtitle}>
-                    {ANIME_DETAIL.POPULARITY_RANK}
+                    {DETAIL.POPULARITY_RANK}
                   </Text>
-                  <Text>{anime.attributes.popularityRank}</Text>
+                  <Text>{detail.attributes.popularityRank}</Text>
                 </View>
                 <View style={Styles.containerColumn}>
                   <Text style={GlobalStyles.subtitle}>
-                    {ANIME_DETAIL.RATING_RANK}
+                    {DETAIL.RATING_RANK}
                   </Text>
-                  <Text>{anime.attributes.ratingRank}</Text>
+                  <Text>{detail.attributes.ratingRank}</Text>
                 </View>
               </View>
               <View style={Styles.containerRow}>
                 <View style={Styles.containerColumn}>
                   <Text style={GlobalStyles.subtitle}>
-                    {ANIME_DETAIL.EPISODE_COUNT}
+                    {route.name === ROUTES.ANIME_DETAIL
+                      ? DETAIL.EPISODE_COUNT
+                      : DETAIL.CHAPTER_COUNT}
                   </Text>
-                  <Text>{anime.attributes.episodeCount}</Text>
+                  <Text>
+                    {route.name === ROUTES.ANIME_DETAIL
+                      ? detail.attributes.episodeCount
+                      : detail.attributes.chapterCount}
+                  </Text>
                 </View>
                 <View style={Styles.containerColumn}>
                   <Text style={GlobalStyles.subtitle}>
-                    {ANIME_DETAIL.EPISODE_LENGTH}
+                    {route.name === ROUTES.ANIME_DETAIL
+                      ? DETAIL.EPISODE_LENGTH
+                      : DETAIL.VOLUME_COUNT}
                   </Text>
-                  <Text>{anime.attributes.episodeLength}</Text>
+                  <Text>
+                    {route.name === ROUTES.ANIME_DETAIL
+                      ? detail.attributes.episodeLength
+                      : detail.attributes.volumeCount}
+                  </Text>
                 </View>
               </View>
             </CardInformation>
 
             {/* BUTTON OF YOUTUBE LINK */}
-            {anime.attributes.youtubeVideoId !== '' &&
-              anime.attributes.youtubeVideoId && (
+            {detail.attributes.youtubeVideoId !== '' &&
+              detail.attributes.youtubeVideoId && (
                 <Button
                   onPress={handleOpenYoutube}
-                  text={ANIME_DETAIL.YOUTUBE_LINK}
+                  text={DETAIL.YOUTUBE_LINK}
                 />
               )}
 
             {/* EPISODES LIST */}
-            {animeEpisodes.length > 0 &&
+            {episodes.length > 0 &&
               renderFlatList(
-                ANIME_DETAIL.EPISODES,
-                animeEpisodes,
+                DETAIL.EPISODES,
+                episodes,
                 hasMoreToLoadEpisodes,
                 handleMoreResultsEpisodes,
                 renderItemEpisode,
@@ -360,10 +416,10 @@ export const AnimeDetail = ({route, navigation}) => {
               )}
 
             {/* ANIME CHARACTERS LIST */}
-            {animeCharactersDetails.length > 0 &&
+            {charactersDetails.length > 0 &&
               renderFlatList(
-                ANIME_DETAIL.CHARACTERS,
-                animeCharactersDetails,
+                DETAIL.CHARACTERS,
+                charactersDetails,
                 hasMoreToLoadCharacters,
                 handleMoreResultsCharacters,
                 renderItemCharacter,
@@ -375,9 +431,7 @@ export const AnimeDetail = ({route, navigation}) => {
               <Button
                 onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
                 text={
-                  inFavorites
-                    ? ANIME_DETAIL.REMOVE_FAVORITE
-                    : ANIME_DETAIL.ADD_FAVORITE
+                  inFavorites ? DETAIL.REMOVE_FAVORITE : DETAIL.ADD_FAVORITE
                 }
                 colorButton={inFavorites && Styles.colorRemoveButton}
               />
