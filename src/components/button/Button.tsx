@@ -5,7 +5,7 @@ import {GlobalStyles} from 'utils/GlobalStyles';
 // STYLES
 import {Styles} from './ButtonStyles';
 
-export const Button = ({text, onPress, colorButton = null}) => {
+export const Button = ({text, onPress, colorButton}) => {
   return (
     <Pressable
       onPress={onPress}

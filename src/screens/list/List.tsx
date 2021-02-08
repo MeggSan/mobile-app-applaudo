@@ -16,6 +16,9 @@ import {COLORS} from '@constants/Colors';
 import {API} from '@constants/Api';
 import {LIST, ROUTES} from '@constants/Strings';
 
+const {ANIMES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
+const {SEARCH_ANIMES, SEARCH_MANGAS} = LIST;
+
 export const List = ({route, navigation}) => {
   const [valueSearch, setValueSearch] = useState('');
   const [arrayList, setArrayList] = useState([]);
@@ -25,7 +28,7 @@ export const List = ({route, navigation}) => {
 
   useEffect(() => {
     getList(
-      route.name === ROUTES.ANIMES ? getAnimeList : getMangaList,
+      route.name === ANIMES ? getAnimeList : getMangaList,
       offset,
       arrayList,
     );
@@ -34,7 +37,7 @@ export const List = ({route, navigation}) => {
   useEffect(() => {
     if (offset !== 0) {
       getList(
-        route.name === ROUTES.ANIMES ? getAnimeList : getMangaList,
+        route.name === ANIMES ? getAnimeList : getMangaList,
         offset,
         arrayList,
         handleValueToSearch(),
@@ -51,10 +54,9 @@ export const List = ({route, navigation}) => {
   };
 
   const handleNavigate = (detailId: number) => {
-    navigation.navigate(
-      route.name === ROUTES.ANIMES ? ROUTES.ANIME_DETAIL : ROUTES.MANGA_DETAIL,
-      {detailId},
-    );
+    navigation.navigate(route.name === ANIMES ? ANIME_DETAIL : MANGA_DETAIL, {
+      detailId,
+    });
   };
 
   const getList = async (
@@ -107,7 +109,7 @@ export const List = ({route, navigation}) => {
   const handleButtonSearch = () => {
     resetValues();
     getList(
-      route.name === ROUTES.ANIMES ? getAnimeList : getMangaList,
+      route.name === ANIMES ? getAnimeList : getMangaList,
       0,
       [],
       handleValueToSearch(),
@@ -142,11 +144,7 @@ export const List = ({route, navigation}) => {
           value={valueSearch}
           handleSearch={handleSearch}
           handleButtonSearch={handleButtonSearch}
-          placeholder={
-            route.name === ROUTES.ANIMES
-              ? LIST.SEARCH_ANIMES
-              : LIST.SEARCH_MANGAS
-          }
+          placeholder={route.name === ANIMES ? SEARCH_ANIMES : SEARCH_MANGAS}
         />
       }
       ListHeaderComponentStyle={Styles.headerComponent}
