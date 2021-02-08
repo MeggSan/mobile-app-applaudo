@@ -4,12 +4,12 @@ import {StyleSheet} from 'react-native';
 import {PALETTE} from '@constants/Palette';
 
 export const Styles = StyleSheet.create({
-  imageProfile: {
-    width: '100%',
-    height: 150,
-    ...PALETTE.roundedBorder,
+  mgRight: {
+    marginRight: 15,
   },
-  inlineView: {
-    flexDirection: 'row',
+  containerSmallCard: {
+    width: 150,
+    height: 150,
+    ...PALETTE.shadowBox,
   },
 });

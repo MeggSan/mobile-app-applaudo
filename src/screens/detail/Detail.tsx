@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  Image,
-  ActivityIndicator,
-  View,
-  Linking,
-  FlatList,
-} from 'react-native';
+import {Text, Image, ActivityIndicator, View, Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // COMPONENTS
@@ -14,6 +7,7 @@ import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
 import {CardImage} from '@components/cardImage/CardImage';
 import {CardInformation} from '@components/cardInformation/CardInformation';
 import {Button} from '@components/button/Button';
+import {HorizontalList} from '@components/horizontalList/HorizontalList';
 
 // API
 import {
@@ -22,8 +16,6 @@ import {
   getAnimeCharactersList,
   getAnimeCharacterDetail,
 } from '@networking/Animes';
-
-// API
 import {
   getMangaDetail,
   getMangaChaptersList,
@@ -34,12 +26,32 @@ import {
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './DetailStyles';
-import {COLORS} from '@constants/Colors';
 import {DETAIL, ASYNC_STORAGE_VALUES, ROUTES} from '@constants/Strings';
 import {API} from '@constants/Api';
+import {COLORS} from '@constants/Colors';
 
-export const Detail = ({route, navigation}) => {
+const {
+  SYNOPSIS,
+  TITLES,
+  POPULARITY_RANK,
+  RATING_RANK,
+  EPISODE_COUNT,
+  EPISODE_LENGTH,
+  CHAPTER_COUNT,
+  VOLUME_COUNT,
+  YOUTUBE_LINK,
+  EPISODES,
+  CHARACTERS,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
+} = DETAIL;
+const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
+const {ANIME_DETAIL} = ROUTES;
+const {LIMIT_QUANTITY_RESULTS} = API;
+
+export const Detail = ({route}) => {
   const {detailId} = route.params;
+  const isAnimeDetail = route.name === ANIME_DETAIL;
   const [detail, setDetail] = useState(null);
   const [episodes, setEpisodes] = useState([]);
   const [characters, setCharacters] = useState([]);
@@ -56,37 +68,27 @@ export const Detail = ({route, navigation}) => {
 
   useEffect(() => {
     getFavorites();
-    getDetail(
-      route.name === ROUTES.ANIME_DETAIL ? getAnimeDetail : getMangaDetail,
-    );
-    getEpisodes(
-      route.name === ROUTES.ANIME_DETAIL
-        ? getAnimeEpisodesList
-        : getMangaChaptersList,
-    );
-    getCharacters(
-      route.name === ROUTES.ANIME_DETAIL
-        ? getAnimeCharactersList
-        : getMangaCharactersList,
-    );
+    if (isAnimeDetail) {
+      getDetail(getAnimeDetail);
+      getEpisodes(getAnimeEpisodesList);
+      getCharacters(getAnimeCharactersList);
+    } else {
+      getDetail(getMangaDetail);
+      getEpisodes(getMangaChaptersList);
+      getCharacters(getMangaCharactersList);
+    }
   }, []);
 
   useEffect(() => {
     if (offsetEpisodes !== 0) {
-      getEpisodes(
-        route.name === ROUTES.ANIME_DETAIL
-          ? getAnimeEpisodesList
-          : getMangaChaptersList,
-      );
+      getEpisodes(isAnimeDetail ? getAnimeEpisodesList : getMangaChaptersList);
     }
   }, [offsetEpisodes]);
 
   useEffect(() => {
     if (offsetCharacters !== 0) {
       getCharacters(
-        route.name === ROUTES.ANIME_DETAIL
-          ? getAnimeCharactersList
-          : getMangaCharactersList,
+        isAnimeDetail ? getAnimeCharactersList : getMangaCharactersList,
       );
     }
   }, [offsetCharacters]);
@@ -104,7 +106,7 @@ export const Detail = ({route, navigation}) => {
   const getEpisodes = async (getApi) => {
     try {
       const response = await getApi(detailId, {
-        'page[limit]': API.LIMIT_QUANTITY_RESULTS,
+        'page[limit]': LIMIT_QUANTITY_RESULTS,
         'page[offset]': offsetEpisodes,
       });
       if (response.data.data.length === 0) {
@@ -133,10 +135,9 @@ export const Detail = ({route, navigation}) => {
         setCharacters(moreResults);
         const promises = [];
         const charactersResults = [];
-        const get =
-          route.name === ROUTES.ANIME_DETAIL
-            ? getAnimeCharacterDetail
-            : getMangaCharacterDetail;
+        const get = isAnimeDetail
+          ? getAnimeCharacterDetail
+          : getMangaCharacterDetail;
         for (let i = 0; i < results.length; i++) {
           promises.push(get(results[i].id));
         }
@@ -158,32 +159,6 @@ export const Detail = ({route, navigation}) => {
     );
   };
 
-  const renderItemEpisode = ({item}) => {
-    return (
-      <View style={Styles.mgRight}>
-        <CardImage
-          title={item.attributes.titles.en_jp}
-          image={
-            item.attributes.thumbnail && item.attributes.thumbnail.original
-          }
-          style={Styles.containerSmallCard}
-        />
-      </View>
-    );
-  };
-
-  const renderItemCharacter = ({item}) => {
-    return (
-      <View style={Styles.mgRight}>
-        <CardImage
-          title={item.attributes.name}
-          image={item.attributes.image && item.attributes.image.original}
-          style={Styles.containerSmallCard}
-        />
-      </View>
-    );
-  };
-
   const handleMoreResultsEpisodes = () => {
     if (!loadingEpisodes) {
       setLoadingEpisodes(true);
@@ -200,47 +175,11 @@ export const Detail = ({route, navigation}) => {
     }
   };
 
-  const renderFlatList = (
-    title,
-    dataList,
-    hasMoreToLoad,
-    handleMoreResults,
-    renderItem,
-    loading,
-  ) => {
-    return (
-      <View style={Styles.mgTop}>
-        <Text style={[GlobalStyles.titleCard, Styles.mgBottom]}>{title}</Text>
-        <FlatList
-          data={dataList}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-          horizontal={true}
-          onEndReachedThreshold={0.01}
-          onEndReached={hasMoreToLoad ? handleMoreResults : null}
-          ListFooterComponent={() => renderFooter(loading)}
-          ListFooterComponentStyle={
-            hasMoreToLoad ? Styles.footerComponent : null
-          }
-          bounces={false}
-        />
-      </View>
-    );
-  };
-
-  const renderFooter = (loading: boolean) =>
-    loading && <ActivityIndicator color={COLORS.DARK_GRAY} />;
-
   const storeFavorite = async () => {
     try {
       let favoritesTemp = [...favorites, detail];
       const valueStr = JSON.stringify(favoritesTemp);
-      await AsyncStorage.setItem(
-        route.name === ROUTES.ANIME_DETAIL
-          ? ASYNC_STORAGE_VALUES.ANIMES
-          : ASYNC_STORAGE_VALUES.MANGAS,
-        valueStr,
-      );
+      await AsyncStorage.setItem(isAnimeDetail ? ANIMES : MANGAS, valueStr);
       setInFavorites(true);
     } catch (error) {
       console.log('error', error);
@@ -249,11 +188,7 @@ export const Detail = ({route, navigation}) => {
 
   const getFavorites = async () => {
     try {
-      const value = await AsyncStorage.getItem(
-        route.name === ROUTES.ANIME_DETAIL
-          ? ASYNC_STORAGE_VALUES.ANIMES
-          : ASYNC_STORAGE_VALUES.MANGAS,
-      );
+      const value = await AsyncStorage.getItem(isAnimeDetail ? ANIMES : MANGAS);
       if (value !== null) {
         const favoritesValue = JSON.parse(value);
         setFavorites(favoritesValue);
@@ -275,12 +210,7 @@ export const Detail = ({route, navigation}) => {
         (favorite) => favorite.id !== detailId,
       );
       const valueStr = JSON.stringify(newFavoritesArray);
-      await AsyncStorage.setItem(
-        route.name === ROUTES.ANIME_DETAIL
-          ? ASYNC_STORAGE_VALUES.ANIMES
-          : ASYNC_STORAGE_VALUES.MANGAS,
-        valueStr,
-      );
+      await AsyncStorage.setItem(isAnimeDetail ? ANIMES : MANGAS, valueStr);
       setFavorites(newFavoritesArray);
       setInFavorites(false);
     } catch (e) {
@@ -322,7 +252,7 @@ export const Detail = ({route, navigation}) => {
                 />
               </View>
               <View style={GlobalStyles.containerNameTitle}>
-                <Text style={GlobalStyles.titleCard}>{DETAIL.TITLES}</Text>
+                <Text style={GlobalStyles.titleCard}>{TITLES}</Text>
                 {detail.attributes.titles.en && (
                   <Text style={GlobalStyles.textBold}>
                     {detail.attributes.titles.en}
@@ -344,7 +274,7 @@ export const Detail = ({route, navigation}) => {
             {/* SYNOPSIS */}
             <CardInformation>
               <View style={GlobalStyles.containerTitle}>
-                <Text style={GlobalStyles.titleCard}>{DETAIL.SYNOPSIS}</Text>
+                <Text style={GlobalStyles.titleCard}>{SYNOPSIS}</Text>
               </View>
               <Text style={GlobalStyles.text}>
                 {detail.attributes.synopsis}
@@ -355,39 +285,31 @@ export const Detail = ({route, navigation}) => {
             <CardInformation>
               <View style={[Styles.containerRow, Styles.mgBottom]}>
                 <View style={Styles.containerColumn}>
-                  <Text style={GlobalStyles.subtitle}>
-                    {DETAIL.POPULARITY_RANK}
-                  </Text>
+                  <Text style={GlobalStyles.subtitle}>{POPULARITY_RANK}</Text>
                   <Text>{detail.attributes.popularityRank}</Text>
                 </View>
                 <View style={Styles.containerColumn}>
-                  <Text style={GlobalStyles.subtitle}>
-                    {DETAIL.RATING_RANK}
-                  </Text>
+                  <Text style={GlobalStyles.subtitle}>{RATING_RANK}</Text>
                   <Text>{detail.attributes.ratingRank}</Text>
                 </View>
               </View>
               <View style={Styles.containerRow}>
                 <View style={Styles.containerColumn}>
                   <Text style={GlobalStyles.subtitle}>
-                    {route.name === ROUTES.ANIME_DETAIL
-                      ? DETAIL.EPISODE_COUNT
-                      : DETAIL.CHAPTER_COUNT}
+                    {isAnimeDetail ? EPISODE_COUNT : CHAPTER_COUNT}
                   </Text>
                   <Text>
-                    {route.name === ROUTES.ANIME_DETAIL
+                    {isAnimeDetail
                       ? detail.attributes.episodeCount
                       : detail.attributes.chapterCount}
                   </Text>
                 </View>
                 <View style={Styles.containerColumn}>
                   <Text style={GlobalStyles.subtitle}>
-                    {route.name === ROUTES.ANIME_DETAIL
-                      ? DETAIL.EPISODE_LENGTH
-                      : DETAIL.VOLUME_COUNT}
+                    {isAnimeDetail ? EPISODE_LENGTH : VOLUME_COUNT}
                   </Text>
                   <Text>
-                    {route.name === ROUTES.ANIME_DETAIL
+                    {isAnimeDetail
                       ? detail.attributes.episodeLength
                       : detail.attributes.volumeCount}
                   </Text>
@@ -398,41 +320,36 @@ export const Detail = ({route, navigation}) => {
             {/* BUTTON OF YOUTUBE LINK */}
             {detail.attributes.youtubeVideoId !== '' &&
               detail.attributes.youtubeVideoId && (
-                <Button
-                  onPress={handleOpenYoutube}
-                  text={DETAIL.YOUTUBE_LINK}
-                />
+                <Button onPress={handleOpenYoutube} text={YOUTUBE_LINK} />
               )}
 
             {/* EPISODES LIST */}
-            {episodes.length > 0 &&
-              renderFlatList(
-                DETAIL.EPISODES,
-                episodes,
-                hasMoreToLoadEpisodes,
-                handleMoreResultsEpisodes,
-                renderItemEpisode,
-                loadingEpisodes,
-              )}
+            {episodes.length > 0 && (
+              <HorizontalList
+                title={EPISODES}
+                dataList={episodes}
+                hasMoreToLoad={hasMoreToLoadEpisodes}
+                handleMoreResults={handleMoreResultsEpisodes}
+                loading={loadingEpisodes}
+              />
+            )}
 
             {/* ANIME CHARACTERS LIST */}
-            {charactersDetails.length > 0 &&
-              renderFlatList(
-                DETAIL.CHARACTERS,
-                charactersDetails,
-                hasMoreToLoadCharacters,
-                handleMoreResultsCharacters,
-                renderItemCharacter,
-                loadingCharacters,
-              )}
+            {charactersDetails.length > 0 && (
+              <HorizontalList
+                title={CHARACTERS}
+                dataList={charactersDetails}
+                hasMoreToLoad={hasMoreToLoadCharacters}
+                handleMoreResults={handleMoreResultsCharacters}
+                loading={loadingCharacters}
+              />
+            )}
 
             {/* ADD FAVORITE */}
             <View style={Styles.containerFavorites}>
               <Button
                 onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
-                text={
-                  inFavorites ? DETAIL.REMOVE_FAVORITE : DETAIL.ADD_FAVORITE
-                }
+                text={inFavorites ? REMOVE_FAVORITE : ADD_FAVORITE}
                 colorButton={inFavorites && Styles.colorRemoveButton}
               />
             </View>

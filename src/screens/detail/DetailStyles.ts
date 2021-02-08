@@ -18,31 +18,17 @@ export const Styles = StyleSheet.create({
     ...PALETTE.roundedBorder,
     backgroundColor: COLORS.LIGHT_GRAY,
   },
-  mgTop: {
-    marginTop: 15,
-  },
-  mgBottom: {
-    marginBottom: 15,
-  },
-  mgRight: {
-    marginRight: 15,
-  },
-  containerSmallCard: {
-    width: 150,
-    height: 150,
-    ...PALETTE.shadowBox,
-  },
-  footerComponent: {
-    margin: 20,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   containerFavorites: {
     marginVertical: 15,
   },
   colorRemoveButton: {
     backgroundColor: COLORS.RED,
     borderColor: COLORS.DARK_RED,
+  },
+  mgBottom: {
+    marginBottom: 15,
+  },
+  mgTop: {
+    marginTop: 15,
   },
 });

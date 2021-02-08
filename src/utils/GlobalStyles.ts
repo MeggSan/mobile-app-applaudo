@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import {FONTS} from '@constants/Fonts';
 import {FONTS_SIZES} from '@constants/FontsSizes';
 import {PALETTE} from '@constants/Palette';
+import {COLORS} from '@constants/Colors';
 
 export const GlobalStyles = StyleSheet.create({
   titleCard: {
@@ -52,5 +53,10 @@ export const GlobalStyles = StyleSheet.create({
   },
   containerFlatList: {
     margin: 20,
+  },
+  bullet: {
+    color: COLORS.DARK_GRAY,
+    fontSize: 6,
+    marginRight: 5,
   },
 });

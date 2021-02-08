@@ -9,6 +9,8 @@ import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './SearchBarStyles';
 import {LIST} from '@constants/Strings';
 
+const {SEARCH_PLACEHOLDER, BUTTON_SEARCH} = LIST;
+
 export const SearchBar = ({
   value,
   handleSearch,
@@ -22,14 +24,14 @@ export const SearchBar = ({
           <TextInput
             autoCapitalize="none"
             style={GlobalStyles.text}
-            placeholder={LIST.SEARCH_PLACEHOLDER + ' ' + placeholder}
+            placeholder={SEARCH_PLACEHOLDER + ' ' + placeholder}
             onChangeText={handleSearch}
             value={value}
           />
         </View>
       </View>
       <View style={Styles.buttonContainer}>
-        <Button onPress={handleButtonSearch} text={LIST.BUTTON_SEARCH} />
+        <Button onPress={handleButtonSearch} text={BUTTON_SEARCH} />
       </View>
     </View>
   );

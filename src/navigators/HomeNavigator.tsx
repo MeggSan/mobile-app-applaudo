@@ -7,12 +7,13 @@ import {Home} from '@screens/home/Home';
 // CONSTANTS
 import {ROUTES} from '@constants/Strings';
 
+const {HOME} = ROUTES;
 const Stack = createStackNavigator();
 
 export const HomeNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={ROUTES.HOME}>
-      <Stack.Screen name={ROUTES.HOME} component={Home} />
+    <Stack.Navigator initialRouteName={HOME}>
+      <Stack.Screen name={HOME} component={Home} />
     </Stack.Navigator>
   );
 };

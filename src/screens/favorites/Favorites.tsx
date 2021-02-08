@@ -11,6 +11,9 @@ import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './FavoritesStyles';
 import {ASYNC_STORAGE_VALUES, ROUTES} from '@constants/Strings';
 
+const {ANIME_FAVORITES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
+const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
+
 export const Favorites = ({route, navigation}) => {
   const [favorites, setFavorites] = useState([]);
 
@@ -23,9 +26,7 @@ export const Favorites = ({route, navigation}) => {
   const getFavorites = async () => {
     try {
       const value = await AsyncStorage.getItem(
-        route.name === ROUTES.ANIME_FAVORITES
-          ? ASYNC_STORAGE_VALUES.ANIMES
-          : ASYNC_STORAGE_VALUES.MANGAS,
+        route.name === ANIME_FAVORITES ? ANIMES : MANGAS,
       );
       if (value !== null) {
         const favoritesValue = JSON.parse(value);
@@ -38,9 +39,7 @@ export const Favorites = ({route, navigation}) => {
 
   const handleNavigate = (detailId) => {
     navigation.navigate(
-      route.name === ROUTES.ANIME_FAVORITES
-        ? ROUTES.ANIME_DETAIL
-        : ROUTES.MANGA_DETAIL,
+      route.name === ANIME_FAVORITES ? ANIME_DETAIL : MANGA_DETAIL,
       {detailId},
     );
   };

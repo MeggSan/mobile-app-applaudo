@@ -5,6 +5,9 @@ import {Text, Image, View} from 'react-native';
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
 import {CardInformation} from '@components/cardInformation/CardInformation';
 import {BottomLine} from '@components/bottomLine/BottomLine';
+import {JobsList} from '@components/jobsList/JobsList';
+import {InlineInfo} from '@components/inlineInfo/InlineInfo';
+import {InfoList} from '@components/infoList/InfoList';
 
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
@@ -20,44 +23,6 @@ import {
 } from '@constants/Strings';
 
 export const Home = () => {
-  const renderInfoList = (information) => {
-    return (
-      <View style={Styles.marginTopText}>
-        <Text style={GlobalStyles.title}>{information.TITLE}</Text>
-        <BottomLine />
-        {renderList(information.CONTENT)}
-      </View>
-    );
-  };
-
-  const renderJobsList = (jobs) => {
-    return (
-      <View style={Styles.marginTopText}>
-        <Text style={GlobalStyles.title}>{jobs.TITLE}</Text>
-        <BottomLine />
-        <Text style={GlobalStyles.subtitle}>{jobs.EXTRA}</Text>
-        {renderList(jobs.CONTENT)}
-      </View>
-    );
-  };
-
-  const renderList = (array: Array<String>) =>
-    array.map((content, index) => (
-      <View key={index} style={Styles.inlineView}>
-        <Text style={Styles.bullet}>{'\u2B24'}</Text>
-        <Text style={[GlobalStyles.text, Styles.marginBotText]}>{content}</Text>
-      </View>
-    ));
-
-  const renderInlineInfo = (title, content) => {
-    return (
-      <View style={Styles.viewInfo}>
-        <Text style={GlobalStyles.textBold}>{title}</Text>
-        <Text style={GlobalStyles.text}>{content}</Text>
-      </View>
-    );
-  };
-
   return (
     <ContainerScreens>
       {/* PRINCIPAL INFO */}
@@ -92,20 +57,20 @@ export const Home = () => {
           {PERSONAL_INFO.CONTACT_INFO.TITLE}
         </Text>
         <BottomLine />
-        {renderInlineInfo(
-          PERSONAL_INFO.CONTACT_INFO.EMAIL.TITLE,
-          PERSONAL_INFO.CONTACT_INFO.EMAIL.CONTENT,
-        )}
-        {renderInlineInfo(
-          PERSONAL_INFO.CONTACT_INFO.PHONE.TITLE,
-          PERSONAL_INFO.CONTACT_INFO.PHONE.CONTENT,
-        )}
-        {renderInlineInfo(
-          PERSONAL_INFO.CONTACT_INFO.LOCATION.TITLE,
-          PERSONAL_INFO.CONTACT_INFO.LOCATION.CONTENT,
-        )}
-        {renderInfoList(PERSONAL_INFO.HOBBIES)}
-        {renderInfoList(PERSONAL_INFO.LANGUAGES)}
+        <InlineInfo
+          title={PERSONAL_INFO.CONTACT_INFO.EMAIL.TITLE}
+          content={PERSONAL_INFO.CONTACT_INFO.EMAIL.CONTENT}
+        />
+        <InlineInfo
+          title={PERSONAL_INFO.CONTACT_INFO.PHONE.TITLE}
+          content={PERSONAL_INFO.CONTACT_INFO.PHONE.CONTENT}
+        />
+        <InlineInfo
+          title={PERSONAL_INFO.CONTACT_INFO.LOCATION.TITLE}
+          content={PERSONAL_INFO.CONTACT_INFO.LOCATION.CONTENT}
+        />
+        <InfoList information={PERSONAL_INFO.HOBBIES} />
+        <InfoList information={PERSONAL_INFO.LANGUAGES} />
       </CardInformation>
 
       {/* PROFESSIONAL INFORMATION */}
@@ -113,9 +78,9 @@ export const Home = () => {
         <View style={GlobalStyles.containerTitle}>
           <Text style={GlobalStyles.titleCard}>{PROFESSIONAL_INFO.TITLE}</Text>
         </View>
-        {renderJobsList(PROFESSIONAL_INFO.NATIVAPPS)}
-        {renderJobsList(PROFESSIONAL_INFO.WAYU_INC)}
-        {renderJobsList(PROFESSIONAL_INFO.KRONO_GROUP)}
+        <JobsList jobs={PROFESSIONAL_INFO.NATIVAPPS} />
+        <JobsList jobs={PROFESSIONAL_INFO.WAYU_INC} />
+        <JobsList jobs={PROFESSIONAL_INFO.KRONO_GROUP} />
       </CardInformation>
 
       {/* SOFTWARE SKILLS */}
@@ -123,8 +88,8 @@ export const Home = () => {
         <View style={GlobalStyles.containerTitle}>
           <Text style={GlobalStyles.titleCard}>{SOFTWARES_SKILLS.TITLE}</Text>
         </View>
-        {renderInfoList(SOFTWARES_SKILLS.PROGRAMMING)}
-        {renderInfoList(SOFTWARES_SKILLS.SOFTWARES)}
+        <InfoList information={SOFTWARES_SKILLS.PROGRAMMING} />
+        <InfoList information={SOFTWARES_SKILLS.SOFTWARES} />
       </CardInformation>
 
       {/* EDUCATION */}
@@ -136,10 +101,10 @@ export const Home = () => {
         <BottomLine />
         <Text style={GlobalStyles.textBold}>{EDUCATION.DEGREE.EXTRA}</Text>
         <View style={Styles.inlineView}>
-          <Text style={Styles.bullet}>{'\u2B24'}</Text>
+          <Text style={GlobalStyles.bullet}>{'\u2B24'}</Text>
           <Text style={GlobalStyles.text}>{EDUCATION.DEGREE.CONTENT}</Text>
         </View>
-        {renderInfoList(EDUCATION.COURSES)}
+        <InfoList information={EDUCATION.COURSES} />
       </CardInformation>
     </ContainerScreens>
   );
