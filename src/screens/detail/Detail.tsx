@@ -44,6 +44,9 @@ const {
   CHARACTERS,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
+  EN,
+  EN_JP,
+  JA_JP,
 } = DETAIL;
 const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
 const {ANIME_DETAIL} = ROUTES;
@@ -98,6 +101,7 @@ export const Detail = ({route}) => {
       const response = await getApi(detailId);
       setDetail(response.data.data);
       setLoading(false);
+      console.log('detail', response.data.data);
     } catch (error) {
       console.log('error', error);
     }
@@ -235,10 +239,15 @@ export const Detail = ({route}) => {
           <>
             {/* COVER IMAGE */}
             <CardImage
-              title={detail.attributes.titles.en_jp}
+              title={
+                detail.attributes.titles.en
+                  ? detail.attributes.titles.en
+                  : detail.attributes.titles.en_jp
+              }
               image={
-                detail.attributes.coverImage &&
-                detail.attributes.coverImage.small
+                detail.attributes.coverImage
+                  ? detail.attributes.coverImage.small
+                  : detail.attributes.posterImage.small
               }
             />
 
@@ -255,17 +264,17 @@ export const Detail = ({route}) => {
                 <Text style={GlobalStyles.titleCard}>{TITLES}</Text>
                 {detail.attributes.titles.en && (
                   <Text style={GlobalStyles.textBold}>
-                    {detail.attributes.titles.en}
+                    {EN + ' : ' + detail.attributes.titles.en}
                   </Text>
                 )}
                 {detail.attributes.titles.en_jp && (
                   <Text style={GlobalStyles.textBold}>
-                    {detail.attributes.titles.en_jp}
+                    {EN_JP + ' : ' + detail.attributes.titles.en_jp}
                   </Text>
                 )}
                 {detail.attributes.titles.ja_jp && (
                   <Text style={GlobalStyles.textBold}>
-                    {detail.attributes.titles.ja_jp}
+                    {JA_JP + ' : ' + detail.attributes.titles.ja_jp}
                   </Text>
                 )}
               </View>
@@ -324,26 +333,22 @@ export const Detail = ({route}) => {
               )}
 
             {/* EPISODES LIST */}
-            {episodes.length > 0 && (
-              <HorizontalList
-                title={EPISODES}
-                dataList={episodes}
-                hasMoreToLoad={hasMoreToLoadEpisodes}
-                handleMoreResults={handleMoreResultsEpisodes}
-                loading={loadingEpisodes}
-              />
-            )}
+            <HorizontalList
+              title={EPISODES}
+              dataList={episodes}
+              hasMoreToLoad={hasMoreToLoadEpisodes}
+              handleMoreResults={handleMoreResultsEpisodes}
+              loading={loadingEpisodes}
+            />
 
             {/* ANIME CHARACTERS LIST */}
-            {charactersDetails.length > 0 && (
-              <HorizontalList
-                title={CHARACTERS}
-                dataList={charactersDetails}
-                hasMoreToLoad={hasMoreToLoadCharacters}
-                handleMoreResults={handleMoreResultsCharacters}
-                loading={loadingCharacters}
-              />
-            )}
+            <HorizontalList
+              title={CHARACTERS}
+              dataList={charactersDetails}
+              hasMoreToLoad={hasMoreToLoadCharacters}
+              handleMoreResults={handleMoreResultsCharacters}
+              loading={loadingCharacters}
+            />
 
             {/* ADD FAVORITE */}
             <View style={Styles.containerFavorites}>

@@ -1,6 +1,6 @@
 # mobile-app-applaudo
 
-# Mobile App Applaudo - Developed with React Native
+# MS Kitsu App - Developed with React Native
 
 This is a mobile application for a technical challenge from the company Applaudo Studios, with connection to the Kitsu api: https://kitsu.docs.apiary.io/ to obtain information about Anime and Manga.
 
@@ -17,8 +17,15 @@ The app present a principal screen with my personal and professional information
 
 ## Third Party Libraries Versions
 
-| Dependency | Version |
-| ---------- | ------- |
+| Dependency                | Version |
+| ------------------------- | ------- |
+| AsyncStorage              | 1.13.4  |
+| NetInfo                   | 5.9.10  |
+| React Navigation          | 5.x.x   |
+| Axios                     | 0.21.1  |
+| React Native Bootsplash   | 3.1.3   |
+| React Native Offline      | 5.7.0   |
+| React Native Vector Icons | 8.0.0   |
 
 ## Instructions to run the project
 
@@ -52,4 +59,4 @@ To fix issues if there are errors after installing libraries / or doing npm inst
 
 - Option 4: Run `npx react-native link` in the project root.
 
-- Option 5: (Problems only with Android [app opens and closes immediately in emulator] and as a last resort) Run the command inside the project folder `cd android && ./gradlew clean`
+- Option 5: (Problems only with Android [app opens and closes immediately in emulator]) Run the command inside the project folder `cd android && ./gradlew clean`

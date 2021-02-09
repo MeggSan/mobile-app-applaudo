@@ -11,5 +11,6 @@ export const Styles = StyleSheet.create({
   },
   inlineView: {
     flexDirection: 'row',
+    marginTop: 5,
   },
 });

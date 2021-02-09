@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, ActivityIndicator} from 'react-native';
+import {FlatList} from 'react-native';
 
 // COMPONENTS
 import {SearchBar} from '@components/searchBar/SearchBar';
 import {PressableCardImage} from '@components/pressableCardImage/PressableCardImage';
+import {EmptyList} from '@components/emptyList/EmptyList';
+import {FooterSpinner} from '@components/footerSpinner/FooterSpinner';
 
 // API
 import {getAnimeList} from '@networking/Animes';
@@ -12,12 +14,11 @@ import {getMangaList} from '@networking/Mangas';
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './ListStyles';
-import {COLORS} from '@constants/Colors';
 import {API} from '@constants/Api';
 import {LIST, ROUTES} from '@constants/Strings';
 
 const {ANIMES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
-const {SEARCH_ANIMES, SEARCH_MANGAS} = LIST;
+const {SEARCH_ANIMES, SEARCH_MANGAS, EMPTY} = LIST;
 
 export const List = ({route, navigation}) => {
   const [valueSearch, setValueSearch] = useState('');
@@ -91,9 +92,6 @@ export const List = ({route, navigation}) => {
     }
   };
 
-  const renderFooter = () =>
-    loading && <ActivityIndicator color={COLORS.DARK_GRAY} />;
-
   const handleSearch = (text) => {
     const lowerCaseText = text.toLowerCase();
     setValueSearch(lowerCaseText);
@@ -120,7 +118,11 @@ export const List = ({route, navigation}) => {
     <FlatList
       stickyHeaderIndices={[0]}
       data={arrayList}
+      contentContainerStyle={GlobalStyles.contentContainerStyle}
       keyExtractor={(item) => item.id}
+      ListEmptyComponent={() =>
+        !loading ? <EmptyList message={EMPTY} /> : null
+      }
       renderItem={({item: {id, attributes}}) => (
         <PressableCardImage
           handleNavigate={() => handleNavigate(id)}
@@ -148,7 +150,7 @@ export const List = ({route, navigation}) => {
         />
       }
       ListHeaderComponentStyle={Styles.headerComponent}
-      ListFooterComponent={renderFooter}
+      ListFooterComponent={loading ? <FooterSpinner /> : null}
       ListFooterComponentStyle={hasMoreToLoad ? Styles.footerComponent : null}
       bounces={false}
     />

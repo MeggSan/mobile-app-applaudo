@@ -22,6 +22,19 @@ import {
   EDUCATION,
 } from '@constants/Strings';
 
+const {TITLE_JOB, NAME} = PRINCIPAL_INFO;
+const {TITLE_PROFILE, CONTENT_PROFILE} = PROFILE;
+const {TITLE_PERSONAL_INFO, CONTACT_INFO, HOBBIES, LANGUAGES} = PERSONAL_INFO;
+const {
+  TITLE_PROFESSIONAL_INFO,
+  NATIVAPPS,
+  WAYU_INC,
+  KRONO_GROUP,
+  JOB,
+} = PROFESSIONAL_INFO;
+const {TITLE_SOFTWARES_SKILLS, PROGRAMMING, SOFTWARES} = SOFTWARES_SKILLS;
+const {TITLE_EDUCATION, DEGREE, COURSES} = EDUCATION;
+
 export const Home = () => {
   return (
     <ContainerScreens>
@@ -35,76 +48,74 @@ export const Home = () => {
           />
         </View>
         <View style={GlobalStyles.containerNameTitle}>
-          <Text style={GlobalStyles.title}>{PRINCIPAL_INFO.NAME}</Text>
-          <Text style={GlobalStyles.title}>{PRINCIPAL_INFO.TITLE}</Text>
+          <Text style={GlobalStyles.title}>{NAME}</Text>
+          <Text style={GlobalStyles.title}>{TITLE_JOB}</Text>
         </View>
       </View>
 
       {/* PROFILE INFO */}
       <CardInformation>
         <View style={GlobalStyles.containerTitle}>
-          <Text style={GlobalStyles.titleCard}>{PROFILE.TITLE}</Text>
+          <Text style={GlobalStyles.titleCard}>{TITLE_PROFILE}</Text>
         </View>
-        <Text style={GlobalStyles.text}>{PROFILE.CONTENT}</Text>
+        <Text style={GlobalStyles.text}>{CONTENT_PROFILE}</Text>
       </CardInformation>
 
       {/* PERSONAL INFORMATION */}
       <CardInformation>
         <View style={GlobalStyles.containerTitle}>
-          <Text style={GlobalStyles.titleCard}>{PERSONAL_INFO.TITLE}</Text>
+          <Text style={GlobalStyles.titleCard}>{TITLE_PERSONAL_INFO}</Text>
         </View>
-        <Text style={GlobalStyles.title}>
-          {PERSONAL_INFO.CONTACT_INFO.TITLE}
-        </Text>
+        <Text style={GlobalStyles.title}>{CONTACT_INFO.TITLE}</Text>
         <BottomLine />
         <InlineInfo
-          title={PERSONAL_INFO.CONTACT_INFO.EMAIL.TITLE}
-          content={PERSONAL_INFO.CONTACT_INFO.EMAIL.CONTENT}
+          title={CONTACT_INFO.EMAIL.TITLE}
+          content={CONTACT_INFO.EMAIL.CONTENT}
         />
         <InlineInfo
-          title={PERSONAL_INFO.CONTACT_INFO.PHONE.TITLE}
-          content={PERSONAL_INFO.CONTACT_INFO.PHONE.CONTENT}
+          title={CONTACT_INFO.PHONE.TITLE}
+          content={CONTACT_INFO.PHONE.CONTENT}
         />
         <InlineInfo
-          title={PERSONAL_INFO.CONTACT_INFO.LOCATION.TITLE}
-          content={PERSONAL_INFO.CONTACT_INFO.LOCATION.CONTENT}
+          title={CONTACT_INFO.LOCATION.TITLE}
+          content={CONTACT_INFO.LOCATION.CONTENT}
         />
-        <InfoList information={PERSONAL_INFO.HOBBIES} />
-        <InfoList information={PERSONAL_INFO.LANGUAGES} />
+        <InfoList information={HOBBIES} />
+        <InfoList information={LANGUAGES} />
       </CardInformation>
 
       {/* PROFESSIONAL INFORMATION */}
       <CardInformation>
         <View style={GlobalStyles.containerTitle}>
-          <Text style={GlobalStyles.titleCard}>{PROFESSIONAL_INFO.TITLE}</Text>
+          <Text style={GlobalStyles.titleCard}>{TITLE_PROFESSIONAL_INFO}</Text>
         </View>
-        <JobsList jobs={PROFESSIONAL_INFO.NATIVAPPS} />
-        <JobsList jobs={PROFESSIONAL_INFO.WAYU_INC} />
-        <JobsList jobs={PROFESSIONAL_INFO.KRONO_GROUP} />
+        <JobsList jobs={NATIVAPPS} jobTitle={JOB} />
+        <JobsList jobs={WAYU_INC} jobTitle={JOB} />
+        <JobsList jobs={KRONO_GROUP} jobTitle={JOB} />
       </CardInformation>
 
       {/* SOFTWARE SKILLS */}
       <CardInformation>
         <View style={GlobalStyles.containerTitle}>
-          <Text style={GlobalStyles.titleCard}>{SOFTWARES_SKILLS.TITLE}</Text>
+          <Text style={GlobalStyles.titleCard}>{TITLE_SOFTWARES_SKILLS}</Text>
         </View>
-        <InfoList information={SOFTWARES_SKILLS.PROGRAMMING} />
-        <InfoList information={SOFTWARES_SKILLS.SOFTWARES} />
+        <InfoList information={PROGRAMMING} />
+        <InfoList information={SOFTWARES} />
       </CardInformation>
 
       {/* EDUCATION */}
       <CardInformation>
         <View style={GlobalStyles.containerTitle}>
-          <Text style={GlobalStyles.titleCard}>{EDUCATION.TITLE}</Text>
+          <Text style={GlobalStyles.titleCard}>{TITLE_EDUCATION}</Text>
         </View>
-        <Text style={GlobalStyles.title}>{EDUCATION.DEGREE.TITLE}</Text>
+        <Text style={GlobalStyles.title}>{DEGREE.TITLE}</Text>
         <BottomLine />
-        <Text style={GlobalStyles.textBold}>{EDUCATION.DEGREE.EXTRA}</Text>
+        <Text style={GlobalStyles.textBold}>{DEGREE.EXTRA}</Text>
         <View style={Styles.inlineView}>
           <Text style={GlobalStyles.bullet}>{'\u2B24'}</Text>
-          <Text style={GlobalStyles.text}>{EDUCATION.DEGREE.CONTENT}</Text>
+          <Text style={GlobalStyles.text}>{DEGREE.CONTENT}</Text>
         </View>
-        <InfoList information={EDUCATION.COURSES} />
+        <InfoList information={COURSES} />
       </CardInformation>
     </ContainerScreens>
   );

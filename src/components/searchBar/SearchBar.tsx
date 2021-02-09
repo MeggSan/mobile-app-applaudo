@@ -23,7 +23,7 @@ export const SearchBar = ({
         <View style={Styles.search}>
           <TextInput
             autoCapitalize="none"
-            style={GlobalStyles.text}
+            style={[GlobalStyles.text, Styles.paddingInput]}
             placeholder={SEARCH_PLACEHOLDER + ' ' + placeholder}
             onChangeText={handleSearch}
             value={value}

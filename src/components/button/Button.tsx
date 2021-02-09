@@ -1,8 +1,8 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import {GlobalStyles} from 'utils/GlobalStyles';
 
 // STYLES
+import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './ButtonStyles';
 
 export const Button = ({text, onPress, colorButton}) => {

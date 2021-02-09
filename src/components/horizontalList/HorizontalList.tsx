@@ -1,16 +1,17 @@
 import React from 'react';
-import {View, Text, FlatList, ActivityIndicator} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 
 // COMPONENTS
 import {MiniCardImage} from '@components/miniCardImage/MiniCardImage';
+import {EmptyList} from '@components/emptyList/EmptyList';
+import {FooterSpinner} from '@components/footerSpinner/FooterSpinner';
 
-// STYLES
+// STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './HorizontalListStyles';
-import {COLORS} from '@constants/Colors';
 import {DETAIL} from '@constants/Strings';
 
-const {EPISODES} = DETAIL;
+const {EPISODES, EMPTY} = DETAIL;
 
 export const HorizontalList = ({
   title,
@@ -21,15 +22,15 @@ export const HorizontalList = ({
 }) => {
   const isEpisodes = EPISODES === title;
 
-  const renderFooter = (loading: boolean) =>
-    loading && <ActivityIndicator color={COLORS.DARK_GRAY} />;
-
   return (
     <View style={Styles.mgTop}>
       <Text style={[GlobalStyles.titleCard, Styles.mgBottom]}>{title}</Text>
       <FlatList
         data={dataList}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={() =>
+          !loading ? <EmptyList message={EMPTY} /> : null
+        }
         renderItem={({item}) => (
           <MiniCardImage
             title={
@@ -46,7 +47,7 @@ export const HorizontalList = ({
         horizontal={true}
         onEndReachedThreshold={0.01}
         onEndReached={hasMoreToLoad ? handleMoreResults : null}
-        ListFooterComponent={() => renderFooter(loading)}
+        ListFooterComponent={loading ? <FooterSpinner /> : null}
         ListFooterComponentStyle={hasMoreToLoad ? Styles.footerComponent : null}
         bounces={false}
       />
