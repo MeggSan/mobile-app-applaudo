@@ -1,16 +1,16 @@
 export const PRINCIPAL_INFO = {
   NAME: 'Meggie Sánchez',
-  TITLE: 'COMPUTER ENGINEER / FRONTEND DEVELOPER',
+  TITLE_JOB: 'COMPUTER ENGINEER / FRONTEND DEVELOPER',
 };
 
 export const PROFILE = {
-  TITLE: 'PROFILE',
-  CONTENT:
+  TITLE_PROFILE: 'PROFILE',
+  CONTENT_PROFILE:
     "Dedicated and meticulous frontend developer with almost 4 years of experience developing, innovating and maintaining different mobile applications and systems web. I always search to innovate and develop projects with modern architectures and optimizations, executing the best practices in collaborative environments. I'm responsible, organized and can be adaptable to changes.",
 };
 
 export const PERSONAL_INFO = {
-  TITLE: 'PERSONAL INFORMATION',
+  TITLE_PERSONAL_INFO: 'PERSONAL INFORMATION',
   CONTACT_INFO: {
     TITLE: 'Contact Information',
     EMAIL: {
@@ -37,7 +37,7 @@ export const PERSONAL_INFO = {
 };
 
 export const PROFESSIONAL_INFO = {
-  TITLE: 'PROFESSIONAL INFORMATION',
+  TITLE_PROFESSIONAL_INFO: 'PROFESSIONAL INFORMATION',
   JOB: 'Frontend Developer (Web and Apps)',
   NATIVAPPS: {
     TITLE: 'NativApps Inc (Colombia)',
@@ -75,7 +75,7 @@ export const PROFESSIONAL_INFO = {
 };
 
 export const SOFTWARES_SKILLS = {
-  TITLE: 'SOFTWARE SKILLS',
+  TITLE_SOFTWARES_SKILLS: 'SOFTWARE SKILLS',
   PROGRAMMING: {
     TITLE: 'Programming',
     CONTENT: [
@@ -101,7 +101,7 @@ export const SOFTWARES_SKILLS = {
 };
 
 export const EDUCATION = {
-  TITLE: 'EDUCATION',
+  TITLE_EDUCATION: 'EDUCATION',
   DEGREE: {
     TITLE: 'Computer Engineering • Simón Bolívar University',
     EXTRA: 'Caracas, Venezuela • September 2011 - December 2017',
@@ -139,6 +139,11 @@ export const DETAIL = {
   CHARACTERS: 'CHARACTERS',
   ADD_FAVORITE: 'ADD FAVORITE',
   REMOVE_FAVORITE: 'REMOVE FAVORITE',
+  EMPTY: 'There are no results',
+  EMPTY_TITLE_CARD: 'No Title',
+  EN: 'English',
+  EN_JP: 'English/Japanese',
+  JA_JP: 'Japanese',
 };
 
 export const LIST = {

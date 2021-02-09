@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 // CONSTANTS
 import {COLORS} from '@constants/Colors';
@@ -10,7 +10,16 @@ export const Styles = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
     borderColor: COLORS.LIGHT_GRAY,
     borderWidth: 1,
-    padding: 15,
+  },
+  paddingInput: {
+    ...Platform.select({
+      ios: {
+        padding: 15,
+      },
+      android: {
+        padding: 10,
+      },
+    }),
   },
   buttonContainer: {
     flex: 0.3,

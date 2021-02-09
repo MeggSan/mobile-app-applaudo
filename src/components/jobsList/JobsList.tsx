@@ -9,10 +9,10 @@ import {List} from '@components/list/List';
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './JobsListStyles';
 
-export const JobsList = ({jobs}) => {
+export const JobsList = ({jobs, jobTitle}) => {
   return (
     <View style={Styles.marginTopText}>
-      <Text style={GlobalStyles.title}>{jobs.TITLE}</Text>
+      <Text style={GlobalStyles.title}>{jobTitle + ' - ' + jobs.TITLE}</Text>
       <BottomLine />
       <Text style={GlobalStyles.subtitle}>{jobs.EXTRA}</Text>
       <List array={jobs.CONTENT} />

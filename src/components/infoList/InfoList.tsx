@@ -2,12 +2,12 @@ import React from 'react';
 import {View, Text} from 'react-native';
 
 // COMPONENTS
-import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './InfoListStyles';
 import {BottomLine} from '@components/bottomLine/BottomLine';
 import {List} from '@components/list/List';
 
 // STYLES
+import {GlobalStyles} from '@utils/GlobalStyles';
+import {Styles} from './InfoListStyles';
 
 export const InfoList = ({information}) => {
   return (

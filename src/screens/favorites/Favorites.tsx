@@ -7,9 +7,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import {PressableCardImage} from '@components/pressableCardImage/PressableCardImage';
 import {EmptyList} from '@components/emptyList/EmptyList';
 
-// STYLES
+// STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './FavoritesStyles';
 import {ASYNC_STORAGE_VALUES, ROUTES, FAVORITES} from '@constants/Strings';
 
 const {ANIME_FAVORITES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;

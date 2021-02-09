@@ -33,9 +33,12 @@ export const Styles = StyleSheet.create({
   },
   headerComponent: {
     backgroundColor: COLORS.WHITE_GRAY,
-    paddingBottom: 20,
+    paddingBottom: 8,
   },
   footerComponent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 80,
   },
 });
