@@ -4,6 +4,7 @@ import {FlatList, ActivityIndicator} from 'react-native';
 // COMPONENTS
 import {SearchBar} from '@components/searchBar/SearchBar';
 import {PressableCardImage} from '@components/pressableCardImage/PressableCardImage';
+import {EmptyList} from '@components/emptyList/EmptyList';
 
 // API
 import {getAnimeList} from '@networking/Animes';
@@ -17,7 +18,7 @@ import {API} from '@constants/Api';
 import {LIST, ROUTES} from '@constants/Strings';
 
 const {ANIMES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
-const {SEARCH_ANIMES, SEARCH_MANGAS} = LIST;
+const {SEARCH_ANIMES, SEARCH_MANGAS, EMPTY} = LIST;
 
 export const List = ({route, navigation}) => {
   const [valueSearch, setValueSearch] = useState('');
@@ -120,7 +121,11 @@ export const List = ({route, navigation}) => {
     <FlatList
       stickyHeaderIndices={[0]}
       data={arrayList}
+      contentContainerStyle={GlobalStyles.contentContainerStyle}
       keyExtractor={(item) => item.id}
+      ListEmptyComponent={() =>
+        !loading ? <EmptyList message={EMPTY} /> : null
+      }
       renderItem={({item: {id, attributes}}) => (
         <PressableCardImage
           handleNavigate={() => handleNavigate(id)}

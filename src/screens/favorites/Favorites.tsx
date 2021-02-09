@@ -1,18 +1,20 @@
 import React, {useState, useCallback} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 
 // COMPONENTS
 import {PressableCardImage} from '@components/pressableCardImage/PressableCardImage';
+import {EmptyList} from '@components/emptyList/EmptyList';
 
 // STYLES
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './FavoritesStyles';
-import {ASYNC_STORAGE_VALUES, ROUTES} from '@constants/Strings';
+import {ASYNC_STORAGE_VALUES, ROUTES, FAVORITES} from '@constants/Strings';
 
 const {ANIME_FAVORITES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
 const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
+const {EMPTY} = FAVORITES;
 
 export const Favorites = ({route, navigation}) => {
   const [favorites, setFavorites] = useState([]);
@@ -44,10 +46,18 @@ export const Favorites = ({route, navigation}) => {
     );
   };
 
+  const renderr = () => (
+    <View>
+      <Text>Estoy vacio</Text>
+    </View>
+  );
+
   return (
     <FlatList
       data={favorites}
+      contentContainerStyle={GlobalStyles.contentContainerStyle}
       keyExtractor={(item) => item.id}
+      ListEmptyComponent={() => <EmptyList message={EMPTY} />}
       renderItem={({item: {id, attributes}}) => (
         <PressableCardImage
           handleNavigate={() => handleNavigate(id)}

@@ -59,4 +59,7 @@ export const GlobalStyles = StyleSheet.create({
     fontSize: 6,
     marginRight: 5,
   },
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
 });

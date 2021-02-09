@@ -146,6 +146,7 @@ export const LIST = {
   SEARCH_ANIMES: 'animes',
   SEARCH_MANGAS: 'mangas',
   BUTTON_SEARCH: 'SEARCH',
+  EMPTY: 'There are no results for what are you searching for',
 };
 
 export const ASYNC_STORAGE_VALUES = {
@@ -161,4 +162,8 @@ export const ROUTES = {
   MANGA_DETAIL: 'Manga Detail',
   ANIME_FAVORITES: 'Anime Favorites',
   MANGA_FAVORITES: 'Manga Favorites',
+};
+
+export const FAVORITES = {
+  EMPTY: 'There are no favorites in your list',
 };
