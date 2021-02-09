@@ -8,6 +8,7 @@ target 'mobileAppApplaudo' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
   target 'mobileAppApplaudoTests' do
     inherit! :complete
     # Pods for testing
@@ -31,3 +32,4 @@ target 'mobileAppApplaudo-tvOS' do
     # Pods for testing
   end
 end
+
