@@ -6,7 +6,7 @@ import {PALETTE} from '@constants/Palette';
 
 export const Styles = StyleSheet.create({
   containerButton: {
-    padding: 15,
+    padding: 12,
     borderWidth: 1,
     ...PALETTE.shadowBox,
     ...PALETTE.roundedBorder,

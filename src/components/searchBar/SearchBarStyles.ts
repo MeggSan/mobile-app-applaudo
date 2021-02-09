@@ -14,10 +14,10 @@ export const Styles = StyleSheet.create({
   paddingInput: {
     ...Platform.select({
       ios: {
-        padding: 15,
+        padding: 12,
       },
       android: {
-        padding: 10,
+        padding: 7,
       },
     }),
   },
