@@ -1,10 +1,7 @@
 import React, {useEffect} from 'react';
 import {Text, Image, View} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-
-// ACTION TYPE
-import {FAVORITES_TYPES} from '@redux/types/FavoritesTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
@@ -14,9 +11,7 @@ import {JobsList} from '@components/jobsList/JobsList';
 import {InlineInfo} from '@components/inlineInfo/InlineInfo';
 import {InfoList} from '@components/infoList/InfoList';
 
-// STYLES / OTHERS
-import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './HomeStyles';
+// CONSTANTS
 import {IMAGES} from '@constants/Images';
 import {
   PRINCIPAL_INFO,
@@ -27,6 +22,11 @@ import {
   EDUCATION,
   ASYNC_STORAGE_VALUES,
 } from '@constants/Strings';
+import {FAVORITES_TYPES} from '@redux/types/FavoritesTypes';
+
+// STYLES
+import {GlobalStyles} from '@utils/GlobalStyles';
+import {Styles} from './HomeStyles';
 
 const {ADD_ANIME_FAVORITES, ADD_MANGA_FAVORITES} = FAVORITES_TYPES;
 const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;

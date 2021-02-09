@@ -11,11 +11,13 @@ import {FooterSpinner} from '@components/footerSpinner/FooterSpinner';
 import {getAnimeList} from '@networking/Animes';
 import {getMangaList} from '@networking/Mangas';
 
-// STYLES / OTHERS
-import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './ListStyles';
+// CONSTANTS
 import {API} from '@constants/Api';
 import {LIST, ROUTES} from '@constants/Strings';
+
+// STYLES
+import {GlobalStyles} from '@utils/GlobalStyles';
+import {Styles} from './ListStyles';
 
 const {ANIMES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
 const {SEARCH_ANIMES, SEARCH_MANGAS, EMPTY} = LIST;

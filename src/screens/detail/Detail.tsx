@@ -3,9 +3,6 @@ import {Text, Image, ActivityIndicator, View, Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
 
-// ACTIONS
-import {FAVORITES_TYPES} from '@redux/types/FavoritesTypes';
-
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
 import {CardImage} from '@components/cardImage/CardImage';
@@ -27,12 +24,15 @@ import {
   getMangaCharacterDetail,
 } from '@networking/Mangas';
 
-// STYLES / OTHERS
-import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './DetailStyles';
+// CONSTANTS
+import {FAVORITES_TYPES} from '@redux/types/FavoritesTypes';
 import {DETAIL, ASYNC_STORAGE_VALUES, ROUTES} from '@constants/Strings';
 import {API} from '@constants/Api';
 import {COLORS} from '@constants/Colors';
+
+// STYLES
+import {GlobalStyles} from '@utils/GlobalStyles';
+import {Styles} from './DetailStyles';
 
 const {
   ADD_ANIME_FAVORITE,

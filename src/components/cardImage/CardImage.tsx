@@ -1,10 +1,12 @@
 import React from 'react';
 import {ImageBackground, View, Text} from 'react-native';
 
+// CONSTANTS
+import {DETAIL} from '@constants/Strings';
+
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './CardImageStyles';
-import {DETAIL} from '@constants/Strings';
 
 const {EMPTY_TITLE_CARD} = DETAIL;
 

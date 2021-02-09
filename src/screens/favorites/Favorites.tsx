@@ -6,9 +6,11 @@ import {useSelector} from 'react-redux';
 import {PressableCardImage} from '@components/pressableCardImage/PressableCardImage';
 import {EmptyList} from '@components/emptyList/EmptyList';
 
-// STYLES / OTHERS
-import {GlobalStyles} from '@utils/GlobalStyles';
+// CONSTANTS
 import {ROUTES, FAVORITES} from '@constants/Strings';
+
+// STYLES
+import {GlobalStyles} from '@utils/GlobalStyles';
 
 const {ANIME_FAVORITES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
 const {EMPTY} = FAVORITES;

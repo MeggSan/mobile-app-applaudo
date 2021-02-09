@@ -5,9 +5,11 @@ import {StackNavigationOptions} from '@react-navigation/stack';
 import {HeaderRight} from '@components/headerRight/HeaderRight';
 import {HeaderLeft} from '@components/headerLeft/HeaderLeft';
 
-// STYLES / OTHERS
-import {Styles} from './ScreenOptionsStyles';
+// CONSTANTS
 import {COLORS} from '@constants/Colors';
+
+// STYLES
+import {Styles} from './ScreenOptionsStyles';
 
 const COMMON_PROPERTIES = {
   headerStyle: Styles.headerStyle,

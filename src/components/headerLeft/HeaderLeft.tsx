@@ -2,9 +2,11 @@ import React from 'react';
 import {Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-// STYLES / OTHERS
-import {Styles} from './HeaderLeftStyles';
+// CONSTANTS
 import {COLORS} from '@constants/Colors';
+
+// STYLES
+import {Styles} from './HeaderLeftStyles';
 
 export const HeaderLeft = ({navigation}) => {
   const handleOpenDrawer = () => {
