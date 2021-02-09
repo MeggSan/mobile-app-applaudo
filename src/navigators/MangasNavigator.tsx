@@ -1,23 +1,27 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-// SCREENS
+// SCREENS / COMPONENTS
 import {List} from '@screens/list/List';
 import {Detail} from '@screens/detail/Detail';
-import {Favorites} from '@screens/favorites/Favorites';
+import {ScreenOptions} from '@components/screenOptions/ScreenOptions';
+import {ScreenOptionsWithBack} from '@components/screenOptions/ScreenOptions';
 
 // CONSTANTS
 import {ROUTES} from '@constants/Strings';
 
-const {MANGAS, MANGA_DETAIL, MANGA_FAVORITES} = ROUTES;
+const {MANGAS, MANGA_DETAIL} = ROUTES;
 const Stack = createStackNavigator();
 
 export const MangasNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={MANGAS}>
-      <Stack.Screen name={MANGAS} component={List} />
-      <Stack.Screen name={MANGA_DETAIL} component={Detail} />
-      <Stack.Screen name={MANGA_FAVORITES} component={Favorites} />
+      <Stack.Screen name={MANGAS} component={List} options={ScreenOptions} />
+      <Stack.Screen
+        name={MANGA_DETAIL}
+        component={Detail}
+        options={ScreenOptionsWithBack}
+      />
     </Stack.Navigator>
   );
 };

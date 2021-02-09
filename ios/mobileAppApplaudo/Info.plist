@@ -41,6 +41,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Feather.ttf</string>
 		<string>Metropolis-Regular.otf</string>
 		<string>Metropolis-SemiBold.otf</string>
 	</array>
