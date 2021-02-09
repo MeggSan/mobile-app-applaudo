@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Text, Image, ActivityIndicator, View, Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector, useDispatch} from 'react-redux';
+
+// ACTIONS
+import {FAVORITES_TYPES} from '@redux/types/FavoritesTypes';
 
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
@@ -31,6 +35,12 @@ import {API} from '@constants/Api';
 import {COLORS} from '@constants/Colors';
 
 const {
+  ADD_ANIME_FAVORITE,
+  ADD_MANGA_FAVORITE,
+  REMOVE_ANIME_FAVORITE,
+  REMOVE_MANGA_FAVORITE,
+} = FAVORITES_TYPES;
+const {
   SYNOPSIS,
   TITLES,
   POPULARITY_RANK,
@@ -55,6 +65,8 @@ const {LIMIT_QUANTITY_RESULTS} = API;
 export const Detail = ({route}) => {
   const {detailId} = route.params;
   const isAnimeDetail = route.name === ANIME_DETAIL;
+  const {animeFavorites} = useSelector((state) => state.favoritesReducer);
+  const {mangaFavorites} = useSelector((state) => state.favoritesReducer);
   const [detail, setDetail] = useState(null);
   const [episodes, setEpisodes] = useState([]);
   const [characters, setCharacters] = useState([]);
@@ -66,11 +78,11 @@ export const Detail = ({route}) => {
   const [loadingCharacters, setLoadingCharacters] = useState(true);
   const [hasMoreToLoadEpisodes, setHasMoreToLoadEpisodes] = useState(true);
   const [hasMoreToLoadCharacters, setHasMoreToLoadCharacters] = useState(true);
-  const [favorites, setFavorites] = useState([]);
   const [inFavorites, setInFavorites] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getFavorites();
+    isFavorite();
     if (isAnimeDetail) {
       getDetail(getAnimeDetail);
       getEpisodes(getAnimeEpisodesList);
@@ -101,7 +113,6 @@ export const Detail = ({route}) => {
       const response = await getApi(detailId);
       setDetail(response.data.data);
       setLoading(false);
-      console.log('detail', response.data.data);
     } catch (error) {
       console.log('error', error);
     }
@@ -181,7 +192,14 @@ export const Detail = ({route}) => {
 
   const storeFavorite = async () => {
     try {
-      let favoritesTemp = [...favorites, detail];
+      let favoritesTemp = [];
+      if (isAnimeDetail) {
+        dispatch({type: ADD_ANIME_FAVORITE, payload: detail});
+        favoritesTemp = [...animeFavorites, detail];
+      } else {
+        dispatch({type: ADD_MANGA_FAVORITE, payload: detail});
+        favoritesTemp = [...mangaFavorites, detail];
+      }
       const valueStr = JSON.stringify(favoritesTemp);
       await AsyncStorage.setItem(isAnimeDetail ? ANIMES : MANGAS, valueStr);
       setInFavorites(true);
@@ -190,35 +208,31 @@ export const Detail = ({route}) => {
     }
   };
 
-  const getFavorites = async () => {
-    try {
-      const value = await AsyncStorage.getItem(isAnimeDetail ? ANIMES : MANGAS);
-      if (value !== null) {
-        const favoritesValue = JSON.parse(value);
-        setFavorites(favoritesValue);
-        const findFavorite = favoritesValue.find(
-          (favorite) => favorite.id === detailId,
-        );
-        if (findFavorite) {
-          setInFavorites(true);
-        }
-      }
-    } catch (error) {
-      console.log('error', error);
+  const isFavorite = () => {
+    let favoritesArrayType = isAnimeDetail ? animeFavorites : mangaFavorites;
+    const findFavorite = favoritesArrayType.find(
+      (favorite) => favorite.id === detailId,
+    );
+    if (findFavorite) {
+      setInFavorites(true);
     }
   };
 
   const removeFavorite = async () => {
     try {
+      const favorites = isAnimeDetail ? animeFavorites : mangaFavorites;
       const newFavoritesArray = favorites.filter(
         (favorite) => favorite.id !== detailId,
       );
       const valueStr = JSON.stringify(newFavoritesArray);
       await AsyncStorage.setItem(isAnimeDetail ? ANIMES : MANGAS, valueStr);
-      setFavorites(newFavoritesArray);
+      dispatch({
+        type: isAnimeDetail ? REMOVE_ANIME_FAVORITE : REMOVE_MANGA_FAVORITE,
+        payload: detail.id,
+      });
       setInFavorites(false);
-    } catch (e) {
-      // remove error
+    } catch (error) {
+      console.log('error', error);
     }
   };
 

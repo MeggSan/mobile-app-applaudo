@@ -1,7 +1,6 @@
-import React, {useState, useCallback} from 'react';
-import {FlatList, Text, View} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
+import React from 'react';
+import {FlatList} from 'react-native';
+import {useSelector} from 'react-redux';
 
 // COMPONENTS
 import {PressableCardImage} from '@components/pressableCardImage/PressableCardImage';
@@ -9,51 +8,23 @@ import {EmptyList} from '@components/emptyList/EmptyList';
 
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
-import {ASYNC_STORAGE_VALUES, ROUTES, FAVORITES} from '@constants/Strings';
+import {ROUTES, FAVORITES} from '@constants/Strings';
 
 const {ANIME_FAVORITES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
-const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
 const {EMPTY} = FAVORITES;
 
 export const Favorites = ({route, navigation}) => {
-  const [favorites, setFavorites] = useState([]);
-
-  useFocusEffect(
-    useCallback(() => {
-      getFavorites();
-    }, []),
-  );
-
-  const getFavorites = async () => {
-    try {
-      const value = await AsyncStorage.getItem(
-        route.name === ANIME_FAVORITES ? ANIMES : MANGAS,
-      );
-      if (value !== null) {
-        const favoritesValue = JSON.parse(value);
-        setFavorites(favoritesValue);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  const isAnime = route.name === ANIME_FAVORITES;
+  const {animeFavorites} = useSelector((state) => state.favoritesReducer);
+  const {mangaFavorites} = useSelector((state) => state.favoritesReducer);
 
   const handleNavigate = (detailId) => {
-    navigation.navigate(
-      route.name === ANIME_FAVORITES ? ANIME_DETAIL : MANGA_DETAIL,
-      {detailId},
-    );
+    navigation.navigate(isAnime ? ANIME_DETAIL : MANGA_DETAIL, {detailId});
   };
-
-  const renderr = () => (
-    <View>
-      <Text>Estoy vacio</Text>
-    </View>
-  );
 
   return (
     <FlatList
-      data={favorites}
+      data={isAnime ? animeFavorites : mangaFavorites}
       contentContainerStyle={GlobalStyles.contentContainerStyle}
       keyExtractor={(item) => item.id}
       ListEmptyComponent={() => <EmptyList message={EMPTY} />}

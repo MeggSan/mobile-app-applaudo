@@ -1,5 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, Image, View} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+
+// ACTION TYPE
+import {FAVORITES_TYPES} from '@redux/types/FavoritesTypes';
 
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
@@ -20,8 +25,11 @@ import {
   SOFTWARES_SKILLS,
   PROFESSIONAL_INFO,
   EDUCATION,
+  ASYNC_STORAGE_VALUES,
 } from '@constants/Strings';
 
+const {ADD_ANIME_FAVORITES, ADD_MANGA_FAVORITES} = FAVORITES_TYPES;
+const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
 const {TITLE_JOB, NAME} = PRINCIPAL_INFO;
 const {TITLE_PROFILE, CONTENT_PROFILE} = PROFILE;
 const {TITLE_PERSONAL_INFO, CONTACT_INFO, HOBBIES, LANGUAGES} = PERSONAL_INFO;
@@ -36,6 +44,25 @@ const {TITLE_SOFTWARES_SKILLS, PROGRAMMING, SOFTWARES} = SOFTWARES_SKILLS;
 const {TITLE_EDUCATION, DEGREE, COURSES} = EDUCATION;
 
 export const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getFavorites(ANIMES, ADD_ANIME_FAVORITES);
+    getFavorites(MANGAS, ADD_MANGA_FAVORITES);
+  }, []);
+
+  const getFavorites = async (asyncValue, favoritesType: string) => {
+    try {
+      const value = await AsyncStorage.getItem(asyncValue);
+      if (value !== null) {
+        const favoritesValue = JSON.parse(value);
+        dispatch({type: favoritesType, payload: favoritesValue});
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return (
     <ContainerScreens>
       {/* PRINCIPAL INFO */}
