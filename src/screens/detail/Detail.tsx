@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Text, Image, ActivityIndicator, View, Linking} from 'react-native';
+import {Text, Image, View, Linking, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
+import Share from 'react-native-share';
 
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
@@ -57,6 +58,9 @@ const {
   EN,
   EN_JP,
   JA_JP,
+  SHARE,
+  SHARE_MESSAGE,
+  SHARE_TITLE,
 } = DETAIL;
 const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
 const {ANIME_DETAIL} = ROUTES;
@@ -244,6 +248,46 @@ export const Detail = ({route}) => {
     removeFavorite();
   };
 
+  const handleShareName = () => {
+    const MESSAGE = `${SHARE_MESSAGE} ${
+      detail.attributes.titles.en
+        ? detail.attributes.titles.en
+        : detail.attributes.titles.en_jp
+    }`;
+    const options = Platform.select({
+      ios: {
+        activityItemSources: [
+          {
+            placeholderItem: {
+              type: 'text',
+              content: MESSAGE,
+            },
+            item: {
+              default: {
+                type: 'text',
+                content: MESSAGE,
+              },
+              message: null,
+            },
+          },
+        ],
+      },
+      default: {
+        title: SHARE_TITLE,
+        subject: SHARE_TITLE,
+        message: MESSAGE,
+      },
+    });
+
+    Share.open(options)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      });
+  };
+
   if (loading) {
     return (
       <View style={Styles.centerSpinner}>
@@ -342,13 +386,28 @@ export const Detail = ({route}) => {
           </View>
         </CardInformation>
 
-        {/* BUTTON OF YOUTUBE LINK */}
-        {detail.attributes.youtubeVideoId !== '' &&
-          detail.attributes.youtubeVideoId && (
-            <View>
-              <Button onPress={handleOpenYoutube} text={YOUTUBE_LINK} />
-            </View>
-          )}
+        {/* BUTTON OF YOUTUBE LINK, SHARE NAME AND ADD/REMOVE FAVORITE */}
+        <View style={Styles.containerButtons}>
+          {detail.attributes.youtubeVideoId !== '' &&
+            detail.attributes.youtubeVideoId && (
+              <View style={Styles.mgButton}>
+                <Button onPress={handleOpenYoutube} text={YOUTUBE_LINK} />
+              </View>
+            )}
+          <View style={Styles.mgButton}>
+            <Button
+              onPress={handleShareName}
+              text={SHARE}
+              colorButton={Styles.colorShareButton}
+              colorText={GlobalStyles.textBoldWhite}
+            />
+          </View>
+          <Button
+            onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
+            text={inFavorites ? REMOVE_FAVORITE : ADD_FAVORITE}
+            colorButton={inFavorites && Styles.colorRemoveButton}
+          />
+        </View>
 
         {/* EPISODES LIST */}
         <HorizontalList
@@ -367,15 +426,6 @@ export const Detail = ({route}) => {
           handleMoreResults={handleMoreResultsCharacters}
           loading={loadingCharacters}
         />
-
-        {/* ADD FAVORITE */}
-        <View style={Styles.containerFavorites}>
-          <Button
-            onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
-            text={inFavorites ? REMOVE_FAVORITE : ADD_FAVORITE}
-            colorButton={inFavorites && Styles.colorRemoveButton}
-          />
-        </View>
       </View>
     </ContainerScreens>
   );

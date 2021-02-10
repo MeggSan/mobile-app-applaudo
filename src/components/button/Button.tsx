@@ -5,7 +5,7 @@ import {Pressable, Text} from 'react-native';
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './ButtonStyles';
 
-export const Button = ({text, onPress, colorButton}) => {
+export const Button = ({text, onPress, colorButton, colorText}) => {
   return (
     <Pressable
       onPress={onPress}
@@ -13,7 +13,7 @@ export const Button = ({text, onPress, colorButton}) => {
         Styles.containerButton,
         colorButton ? colorButton : Styles.colorButton,
       ]}>
-      <Text style={GlobalStyles.textBold}>{text}</Text>
+      <Text style={colorText ? colorText : GlobalStyles.textBold}>{text}</Text>
     </Pressable>
   );
 };
