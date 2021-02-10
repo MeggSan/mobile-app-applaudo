@@ -22,11 +22,11 @@ export const Styles = StyleSheet.create({
     }),
   },
   buttonContainer: {
-    flex: 0.3,
+    // flex: 0.3,
     marginLeft: 10,
   },
   searchContainer: {
-    flex: 0.7,
+    flex: 1,
   },
   containerHeader: {
     flexDirection: 'row',

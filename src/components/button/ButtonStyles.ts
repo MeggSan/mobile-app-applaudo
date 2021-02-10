@@ -10,6 +10,7 @@ export const Styles = StyleSheet.create({
     borderWidth: 1,
     ...PALETTE.shadowBox,
     ...PALETTE.roundedBorder,
+    alignSelf: 'flex-start',
   },
   colorButton: {
     backgroundColor: COLORS.PRIMARY,
