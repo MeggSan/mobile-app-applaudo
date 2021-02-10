@@ -1,4 +1,6 @@
 import {StyleSheet, Platform} from 'react-native';
+
+// CONSTANTS
 import {COLORS} from '@constants/Colors';
 
 export const PALETTE = StyleSheet.create({

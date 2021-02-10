@@ -22,6 +22,7 @@ module.exports = {
           '@library': './src/library',
           '@constants': './src/library/constants',
           '@networking': './src/library/networking',
+          '@redux': './src/library/redux',
           '@navigators': './src/navigators',
           '@screens': './src/screens',
           '@utils': './src/utils',

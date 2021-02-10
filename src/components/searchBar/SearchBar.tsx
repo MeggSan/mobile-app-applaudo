@@ -4,10 +4,12 @@ import {View, TextInput} from 'react-native';
 // COMPONENTS
 import {Button} from '@components/button/Button';
 
-// STYLES / OTHERS
+// CONSTANTS
+import {LIST} from '@constants/Strings';
+
+// STYLES
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './SearchBarStyles';
-import {LIST} from '@constants/Strings';
 
 const {SEARCH_PLACEHOLDER, BUTTON_SEARCH} = LIST;
 

@@ -31,4 +31,9 @@ export const Styles = StyleSheet.create({
   mgTop: {
     marginTop: 15,
   },
+  centerSpinner: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

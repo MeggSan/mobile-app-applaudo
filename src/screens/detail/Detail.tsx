@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Text, Image, ActivityIndicator, View, Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector, useDispatch} from 'react-redux';
 
 // COMPONENTS
 import {ContainerScreens} from '@components/containerScreens/ContainerScreens';
@@ -8,6 +9,7 @@ import {CardImage} from '@components/cardImage/CardImage';
 import {CardInformation} from '@components/cardInformation/CardInformation';
 import {Button} from '@components/button/Button';
 import {HorizontalList} from '@components/horizontalList/HorizontalList';
+import {FooterSpinner} from '@components/footerSpinner/FooterSpinner';
 
 // API
 import {
@@ -23,13 +25,21 @@ import {
   getMangaCharacterDetail,
 } from '@networking/Mangas';
 
-// STYLES / OTHERS
-import {GlobalStyles} from '@utils/GlobalStyles';
-import {Styles} from './DetailStyles';
+// CONSTANTS
+import {FAVORITES_TYPES} from '@redux/types/FavoritesTypes';
 import {DETAIL, ASYNC_STORAGE_VALUES, ROUTES} from '@constants/Strings';
 import {API} from '@constants/Api';
-import {COLORS} from '@constants/Colors';
 
+// STYLES
+import {GlobalStyles} from '@utils/GlobalStyles';
+import {Styles} from './DetailStyles';
+
+const {
+  ADD_ANIME_FAVORITE,
+  ADD_MANGA_FAVORITE,
+  REMOVE_ANIME_FAVORITE,
+  REMOVE_MANGA_FAVORITE,
+} = FAVORITES_TYPES;
 const {
   SYNOPSIS,
   TITLES,
@@ -55,6 +65,8 @@ const {LIMIT_QUANTITY_RESULTS} = API;
 export const Detail = ({route}) => {
   const {detailId} = route.params;
   const isAnimeDetail = route.name === ANIME_DETAIL;
+  const {animeFavorites} = useSelector((state) => state.favoritesReducer);
+  const {mangaFavorites} = useSelector((state) => state.favoritesReducer);
   const [detail, setDetail] = useState(null);
   const [episodes, setEpisodes] = useState([]);
   const [characters, setCharacters] = useState([]);
@@ -66,11 +78,11 @@ export const Detail = ({route}) => {
   const [loadingCharacters, setLoadingCharacters] = useState(true);
   const [hasMoreToLoadEpisodes, setHasMoreToLoadEpisodes] = useState(true);
   const [hasMoreToLoadCharacters, setHasMoreToLoadCharacters] = useState(true);
-  const [favorites, setFavorites] = useState([]);
   const [inFavorites, setInFavorites] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getFavorites();
+    isFavorite();
     if (isAnimeDetail) {
       getDetail(getAnimeDetail);
       getEpisodes(getAnimeEpisodesList);
@@ -101,7 +113,6 @@ export const Detail = ({route}) => {
       const response = await getApi(detailId);
       setDetail(response.data.data);
       setLoading(false);
-      console.log('detail', response.data.data);
     } catch (error) {
       console.log('error', error);
     }
@@ -181,7 +192,14 @@ export const Detail = ({route}) => {
 
   const storeFavorite = async () => {
     try {
-      let favoritesTemp = [...favorites, detail];
+      let favoritesTemp = [];
+      if (isAnimeDetail) {
+        dispatch({type: ADD_ANIME_FAVORITE, payload: detail});
+        favoritesTemp = [...animeFavorites, detail];
+      } else {
+        dispatch({type: ADD_MANGA_FAVORITE, payload: detail});
+        favoritesTemp = [...mangaFavorites, detail];
+      }
       const valueStr = JSON.stringify(favoritesTemp);
       await AsyncStorage.setItem(isAnimeDetail ? ANIMES : MANGAS, valueStr);
       setInFavorites(true);
@@ -190,35 +208,31 @@ export const Detail = ({route}) => {
     }
   };
 
-  const getFavorites = async () => {
-    try {
-      const value = await AsyncStorage.getItem(isAnimeDetail ? ANIMES : MANGAS);
-      if (value !== null) {
-        const favoritesValue = JSON.parse(value);
-        setFavorites(favoritesValue);
-        const findFavorite = favoritesValue.find(
-          (favorite) => favorite.id === detailId,
-        );
-        if (findFavorite) {
-          setInFavorites(true);
-        }
-      }
-    } catch (error) {
-      console.log('error', error);
+  const isFavorite = () => {
+    let favoritesArrayType = isAnimeDetail ? animeFavorites : mangaFavorites;
+    const findFavorite = favoritesArrayType.find(
+      (favorite) => favorite.id === detailId,
+    );
+    if (findFavorite) {
+      setInFavorites(true);
     }
   };
 
   const removeFavorite = async () => {
     try {
+      const favorites = isAnimeDetail ? animeFavorites : mangaFavorites;
       const newFavoritesArray = favorites.filter(
         (favorite) => favorite.id !== detailId,
       );
       const valueStr = JSON.stringify(newFavoritesArray);
       await AsyncStorage.setItem(isAnimeDetail ? ANIMES : MANGAS, valueStr);
-      setFavorites(newFavoritesArray);
+      dispatch({
+        type: isAnimeDetail ? REMOVE_ANIME_FAVORITE : REMOVE_MANGA_FAVORITE,
+        payload: detail.id,
+      });
       setInFavorites(false);
-    } catch (e) {
-      // remove error
+    } catch (error) {
+      console.log('error', error);
     }
   };
 
@@ -230,136 +244,138 @@ export const Detail = ({route}) => {
     removeFavorite();
   };
 
+  if (loading) {
+    return (
+      <View style={Styles.centerSpinner}>
+        <FooterSpinner />
+      </View>
+    );
+  }
+
   return (
     <ContainerScreens>
       <View style={Styles.mgBottom}>
-        {loading ? (
-          <ActivityIndicator color={COLORS.DARK_GRAY} />
-        ) : (
-          <>
-            {/* COVER IMAGE */}
-            <CardImage
-              title={
-                detail.attributes.titles.en
-                  ? detail.attributes.titles.en
-                  : detail.attributes.titles.en_jp
-              }
-              image={
-                detail.attributes.coverImage
-                  ? detail.attributes.coverImage.small
-                  : detail.attributes.posterImage.small
-              }
+        {/* COVER IMAGE */}
+        <CardImage
+          title={
+            detail.attributes.titles.en
+              ? detail.attributes.titles.en
+              : detail.attributes.titles.en_jp
+          }
+          image={
+            detail.attributes.coverImage
+              ? detail.attributes.coverImage.small
+              : detail.attributes.posterImage.small
+          }
+        />
+
+        {/* POSTER IMAGE AND TITLES */}
+        <View style={[GlobalStyles.containerTwoColumns, Styles.mgTop]}>
+          <View style={GlobalStyles.containerImage}>
+            <Image
+              style={Styles.imageAnime}
+              source={{uri: detail.attributes.posterImage.small}}
+              resizeMode="cover"
             />
-
-            {/* POSTER IMAGE AND TITLES */}
-            <View style={[GlobalStyles.containerTwoColumns, Styles.mgTop]}>
-              <View style={GlobalStyles.containerImage}>
-                <Image
-                  style={Styles.imageAnime}
-                  source={{uri: detail.attributes.posterImage.small}}
-                  resizeMode="cover"
-                />
-              </View>
-              <View style={GlobalStyles.containerNameTitle}>
-                <Text style={GlobalStyles.titleCard}>{TITLES}</Text>
-                {detail.attributes.titles.en && (
-                  <Text style={GlobalStyles.textBold}>
-                    {EN + ' : ' + detail.attributes.titles.en}
-                  </Text>
-                )}
-                {detail.attributes.titles.en_jp && (
-                  <Text style={GlobalStyles.textBold}>
-                    {EN_JP + ' : ' + detail.attributes.titles.en_jp}
-                  </Text>
-                )}
-                {detail.attributes.titles.ja_jp && (
-                  <Text style={GlobalStyles.textBold}>
-                    {JA_JP + ' : ' + detail.attributes.titles.ja_jp}
-                  </Text>
-                )}
-              </View>
-            </View>
-
-            {/* SYNOPSIS */}
-            <CardInformation>
-              <View style={GlobalStyles.containerTitle}>
-                <Text style={GlobalStyles.titleCard}>{SYNOPSIS}</Text>
-              </View>
-              <Text style={GlobalStyles.text}>
-                {detail.attributes.synopsis}
+          </View>
+          <View style={GlobalStyles.containerNameTitle}>
+            <Text style={GlobalStyles.titleCard}>{TITLES}</Text>
+            {detail.attributes.titles.en && (
+              <Text style={GlobalStyles.textBold}>
+                {EN + ' : ' + detail.attributes.titles.en}
               </Text>
-            </CardInformation>
+            )}
+            {detail.attributes.titles.en_jp && (
+              <Text style={GlobalStyles.textBold}>
+                {EN_JP + ' : ' + detail.attributes.titles.en_jp}
+              </Text>
+            )}
+            {detail.attributes.titles.ja_jp && (
+              <Text style={GlobalStyles.textBold}>
+                {JA_JP + ' : ' + detail.attributes.titles.ja_jp}
+              </Text>
+            )}
+          </View>
+        </View>
 
-            {/* POPULARITY RANK, RATING BANK, EPISODE COUNT AND EPISODE LENGTH */}
-            <CardInformation>
-              <View style={[Styles.containerRow, Styles.mgBottom]}>
-                <View style={Styles.containerColumn}>
-                  <Text style={GlobalStyles.subtitle}>{POPULARITY_RANK}</Text>
-                  <Text>{detail.attributes.popularityRank}</Text>
-                </View>
-                <View style={Styles.containerColumn}>
-                  <Text style={GlobalStyles.subtitle}>{RATING_RANK}</Text>
-                  <Text>{detail.attributes.ratingRank}</Text>
-                </View>
-              </View>
-              <View style={Styles.containerRow}>
-                <View style={Styles.containerColumn}>
-                  <Text style={GlobalStyles.subtitle}>
-                    {isAnimeDetail ? EPISODE_COUNT : CHAPTER_COUNT}
-                  </Text>
-                  <Text>
-                    {isAnimeDetail
-                      ? detail.attributes.episodeCount
-                      : detail.attributes.chapterCount}
-                  </Text>
-                </View>
-                <View style={Styles.containerColumn}>
-                  <Text style={GlobalStyles.subtitle}>
-                    {isAnimeDetail ? EPISODE_LENGTH : VOLUME_COUNT}
-                  </Text>
-                  <Text>
-                    {isAnimeDetail
-                      ? detail.attributes.episodeLength
-                      : detail.attributes.volumeCount}
-                  </Text>
-                </View>
-              </View>
-            </CardInformation>
+        {/* SYNOPSIS */}
+        <CardInformation>
+          <View style={GlobalStyles.containerTitle}>
+            <Text style={GlobalStyles.titleCard}>{SYNOPSIS}</Text>
+          </View>
+          <Text style={GlobalStyles.text}>{detail.attributes.synopsis}</Text>
+        </CardInformation>
 
-            {/* BUTTON OF YOUTUBE LINK */}
-            {detail.attributes.youtubeVideoId !== '' &&
-              detail.attributes.youtubeVideoId && (
-                <Button onPress={handleOpenYoutube} text={YOUTUBE_LINK} />
-              )}
-
-            {/* EPISODES LIST */}
-            <HorizontalList
-              title={EPISODES}
-              dataList={episodes}
-              hasMoreToLoad={hasMoreToLoadEpisodes}
-              handleMoreResults={handleMoreResultsEpisodes}
-              loading={loadingEpisodes}
-            />
-
-            {/* ANIME CHARACTERS LIST */}
-            <HorizontalList
-              title={CHARACTERS}
-              dataList={charactersDetails}
-              hasMoreToLoad={hasMoreToLoadCharacters}
-              handleMoreResults={handleMoreResultsCharacters}
-              loading={loadingCharacters}
-            />
-
-            {/* ADD FAVORITE */}
-            <View style={Styles.containerFavorites}>
-              <Button
-                onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
-                text={inFavorites ? REMOVE_FAVORITE : ADD_FAVORITE}
-                colorButton={inFavorites && Styles.colorRemoveButton}
-              />
+        {/* POPULARITY RANK, RATING BANK, EPISODE COUNT AND EPISODE LENGTH */}
+        <CardInformation>
+          <View style={[Styles.containerRow, Styles.mgBottom]}>
+            <View style={Styles.containerColumn}>
+              <Text style={GlobalStyles.subtitle}>{POPULARITY_RANK}</Text>
+              <Text>{detail.attributes.popularityRank}</Text>
             </View>
-          </>
-        )}
+            <View style={Styles.containerColumn}>
+              <Text style={GlobalStyles.subtitle}>{RATING_RANK}</Text>
+              <Text>{detail.attributes.ratingRank}</Text>
+            </View>
+          </View>
+          <View style={Styles.containerRow}>
+            <View style={Styles.containerColumn}>
+              <Text style={GlobalStyles.subtitle}>
+                {isAnimeDetail ? EPISODE_COUNT : CHAPTER_COUNT}
+              </Text>
+              <Text>
+                {isAnimeDetail
+                  ? detail.attributes.episodeCount
+                  : detail.attributes.chapterCount}
+              </Text>
+            </View>
+            <View style={Styles.containerColumn}>
+              <Text style={GlobalStyles.subtitle}>
+                {isAnimeDetail ? EPISODE_LENGTH : VOLUME_COUNT}
+              </Text>
+              <Text>
+                {isAnimeDetail
+                  ? detail.attributes.episodeLength
+                  : detail.attributes.volumeCount}
+              </Text>
+            </View>
+          </View>
+        </CardInformation>
+
+        {/* BUTTON OF YOUTUBE LINK */}
+        {detail.attributes.youtubeVideoId !== '' &&
+          detail.attributes.youtubeVideoId && (
+            <View>
+              <Button onPress={handleOpenYoutube} text={YOUTUBE_LINK} />
+            </View>
+          )}
+
+        {/* EPISODES LIST */}
+        <HorizontalList
+          title={EPISODES}
+          dataList={episodes}
+          hasMoreToLoad={hasMoreToLoadEpisodes}
+          handleMoreResults={handleMoreResultsEpisodes}
+          loading={loadingEpisodes}
+        />
+
+        {/* ANIME CHARACTERS LIST */}
+        <HorizontalList
+          title={CHARACTERS}
+          dataList={charactersDetails}
+          hasMoreToLoad={hasMoreToLoadCharacters}
+          handleMoreResults={handleMoreResultsCharacters}
+          loading={loadingCharacters}
+        />
+
+        {/* ADD FAVORITE */}
+        <View style={Styles.containerFavorites}>
+          <Button
+            onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
+            text={inFavorites ? REMOVE_FAVORITE : ADD_FAVORITE}
+            colorButton={inFavorites && Styles.colorRemoveButton}
+          />
+        </View>
       </View>
     </ContainerScreens>
   );

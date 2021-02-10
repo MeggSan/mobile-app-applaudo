@@ -26,6 +26,8 @@ The app present a principal screen with my personal and professional information
 | React Native Bootsplash   | 3.1.3   |
 | React Native Offline      | 5.7.0   |
 | React Native Vector Icons | 8.0.0   |
+| React Redux               | 7.2.2   |
+| Redux                     | 4.0.5   |
 
 ## Instructions to run the project
 
@@ -49,7 +51,7 @@ Requeriment: A Mac is required in order to build your app for iOs devices.
 
 #### Note:
 
-To fix issues if there are errors after installing libraries / or doing npm install, try these steps:
+To fix issues (if there are errors after installing libraries / or doing npm install) or during the first run, try these steps:
 
 - Option 1: Run `npx pod-install ios` in the project folder and then rebuild and re-run the app.
 

@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+// CONSTANTS
 import {API} from '@constants/Api';
 
 // AXIOS CONFIGURATION

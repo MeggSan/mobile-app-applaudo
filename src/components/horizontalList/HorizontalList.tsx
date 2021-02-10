@@ -6,10 +6,12 @@ import {MiniCardImage} from '@components/miniCardImage/MiniCardImage';
 import {EmptyList} from '@components/emptyList/EmptyList';
 import {FooterSpinner} from '@components/footerSpinner/FooterSpinner';
 
+// CONSTANTS
+import {DETAIL} from '@constants/Strings';
+
 // STYLES / OTHERS
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './HorizontalListStyles';
-import {DETAIL} from '@constants/Strings';
 
 const {EPISODES, EMPTY} = DETAIL;
 
