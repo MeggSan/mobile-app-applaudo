@@ -23,6 +23,7 @@ const {ANIMES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
 const {SEARCH_ANIMES, SEARCH_MANGAS, EMPTY} = LIST;
 
 export const List = ({route, navigation}) => {
+  const isAnimes = route.name === ANIMES;
   const [valueSearch, setValueSearch] = useState('');
   const [arrayList, setArrayList] = useState([]);
   const [offset, setOffset] = useState(0);
@@ -30,17 +31,13 @@ export const List = ({route, navigation}) => {
   const [hasMoreToLoad, setHasMoreToLoad] = useState(true);
 
   useEffect(() => {
-    getList(
-      route.name === ANIMES ? getAnimeList : getMangaList,
-      offset,
-      arrayList,
-    );
+    getList(isAnimes ? getAnimeList : getMangaList, offset, arrayList);
   }, []);
 
   useEffect(() => {
     if (offset !== 0) {
       getList(
-        route.name === ANIMES ? getAnimeList : getMangaList,
+        isAnimes ? getAnimeList : getMangaList,
         offset,
         arrayList,
         handleValueToSearch(),
@@ -57,16 +54,16 @@ export const List = ({route, navigation}) => {
   };
 
   const handleNavigate = (detailId: number) => {
-    navigation.navigate(route.name === ANIMES ? ANIME_DETAIL : MANGA_DETAIL, {
+    navigation.navigate(isAnimes ? ANIME_DETAIL : MANGA_DETAIL, {
       detailId,
     });
   };
 
   const getList = async (
-    getApi,
+    getApi: any,
     offset: number,
-    arrayList: Array,
-    valueSearch = null,
+    arrayList: Array<Object>,
+    valueSearch: string | null = null,
   ) => {
     try {
       const response = await getApi({
@@ -94,7 +91,7 @@ export const List = ({route, navigation}) => {
     }
   };
 
-  const handleSearch = (text) => {
+  const handleSearch = (text: string) => {
     const lowerCaseText = text.toLowerCase();
     setValueSearch(lowerCaseText);
   };
@@ -109,7 +106,7 @@ export const List = ({route, navigation}) => {
   const handleButtonSearch = () => {
     resetValues();
     getList(
-      route.name === ANIMES ? getAnimeList : getMangaList,
+      isAnimes ? getAnimeList : getMangaList,
       0,
       [],
       handleValueToSearch(),
@@ -121,23 +118,20 @@ export const List = ({route, navigation}) => {
       stickyHeaderIndices={[0]}
       data={arrayList}
       contentContainerStyle={GlobalStyles.contentContainerStyle}
-      keyExtractor={(item) => item.id}
+      keyExtractor={({id}) => id}
       ListEmptyComponent={() =>
         !loading ? <EmptyList message={EMPTY} /> : null
       }
-      renderItem={({item: {id, attributes}}) => (
+      renderItem={({
+        item: {
+          id,
+          attributes: {titles, coverImage, posterImage},
+        },
+      }) => (
         <PressableCardImage
           handleNavigate={() => handleNavigate(id)}
-          title={
-            attributes.titles.en
-              ? attributes.titles.en
-              : attributes.titles.en_jp
-          }
-          image={
-            attributes.coverImage
-              ? attributes.coverImage.small
-              : attributes.posterImage.small
-          }
+          title={titles.en ? titles.en : titles.en_jp}
+          image={coverImage ? coverImage.small : posterImage.small}
         />
       )}
       style={GlobalStyles.containerFlatList}
@@ -148,7 +142,7 @@ export const List = ({route, navigation}) => {
           value={valueSearch}
           handleSearch={handleSearch}
           handleButtonSearch={handleButtonSearch}
-          placeholder={route.name === ANIMES ? SEARCH_ANIMES : SEARCH_MANGAS}
+          placeholder={isAnimes ? SEARCH_ANIMES : SEARCH_MANGAS}
         />
       }
       ListHeaderComponentStyle={Styles.headerComponent}

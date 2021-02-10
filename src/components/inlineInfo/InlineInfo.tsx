@@ -5,7 +5,13 @@ import {View, Text} from 'react-native';
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './InlineInfoStyles';
 
-export const InlineInfo = ({title, content}) => {
+export const InlineInfo = ({
+  title,
+  content,
+}: {
+  title: string;
+  content: string;
+}) => {
   return (
     <View style={Styles.viewInfo}>
       <Text style={GlobalStyles.textBold}>{title}</Text>

@@ -15,12 +15,19 @@ import {GlobalStyles} from '@utils/GlobalStyles';
 const {ANIME_FAVORITES, ANIME_DETAIL, MANGA_DETAIL} = ROUTES;
 const {EMPTY} = FAVORITES;
 
-export const Favorites = ({route, navigation}) => {
+export const Favorites = ({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) => {
   const isAnime = route.name === ANIME_FAVORITES;
-  const {animeFavorites} = useSelector((state) => state.favoritesReducer);
-  const {mangaFavorites} = useSelector((state) => state.favoritesReducer);
+  const {animeFavorites, mangaFavorites} = useSelector(
+    ({favoritesReducer}: {favoritesReducer: any}) => favoritesReducer,
+  );
 
-  const handleNavigate = (detailId) => {
+  const handleNavigate = (detailId: number) => {
     navigation.navigate(isAnime ? ANIME_DETAIL : MANGA_DETAIL, {detailId});
   };
 
@@ -30,19 +37,16 @@ export const Favorites = ({route, navigation}) => {
       contentContainerStyle={GlobalStyles.contentContainerStyle}
       keyExtractor={(item) => item.id}
       ListEmptyComponent={() => <EmptyList message={EMPTY} />}
-      renderItem={({item: {id, attributes}}) => (
+      renderItem={({
+        item: {
+          id,
+          attributes: {titles, coverImage, posterImage},
+        },
+      }) => (
         <PressableCardImage
           handleNavigate={() => handleNavigate(id)}
-          title={
-            attributes.titles.en
-              ? attributes.titles.en
-              : attributes.titles.en_jp
-          }
-          image={
-            attributes.coverImage
-              ? attributes.coverImage.small
-              : attributes.posterImage.small
-          }
+          title={titles.en ? titles.en : titles.en_jp}
+          image={coverImage ? coverImage.small : posterImage.small}
         />
       )}
       style={GlobalStyles.containerFlatList}

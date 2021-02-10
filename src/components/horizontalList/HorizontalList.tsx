@@ -21,6 +21,12 @@ export const HorizontalList = ({
   hasMoreToLoad,
   handleMoreResults,
   loading,
+}: {
+  title: string;
+  dataList: Array<any>;
+  hasMoreToLoad: boolean;
+  handleMoreResults: any;
+  loading: boolean;
 }) => {
   const isEpisodes = EPISODES === title;
 

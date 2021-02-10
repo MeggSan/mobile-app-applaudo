@@ -5,7 +5,7 @@ import {Text, View} from 'react-native';
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './EmptyListStyles';
 
-export const EmptyList = ({message}) => {
+export const EmptyList = ({message}: {message: string}) => {
   return (
     <View style={Styles.emptyContainer}>
       <Text style={[GlobalStyles.text, Styles.centerText]}>{message}</Text>

@@ -7,7 +7,13 @@ import {CardImage} from '@components/cardImage/CardImage';
 // STYLES
 import {Styles} from './MiniCardImageStyles';
 
-export const MiniCardImage = ({title, image}) => {
+export const MiniCardImage = ({
+  title,
+  image,
+}: {
+  title: string;
+  image: string;
+}) => {
   return (
     <View style={Styles.mgRight}>
       <CardImage

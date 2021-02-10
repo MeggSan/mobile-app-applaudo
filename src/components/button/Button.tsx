@@ -5,7 +5,17 @@ import {Pressable, Text} from 'react-native';
 import {GlobalStyles} from '@utils/GlobalStyles';
 import {Styles} from './ButtonStyles';
 
-export const Button = ({text, onPress, colorButton, colorText}) => {
+export const Button = ({
+  text,
+  onPress,
+  colorButton = null,
+  colorText = null,
+}: {
+  text: string;
+  onPress: any;
+  colorButton: Object | null;
+  colorText: Object | null;
+}) => {
   return (
     <Pressable
       onPress={onPress}
