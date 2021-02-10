@@ -51,7 +51,7 @@ export const Home = () => {
     getFavorites(MANGAS, ADD_MANGA_FAVORITES);
   }, []);
 
-  const getFavorites = async (asyncValue, favoritesType: string) => {
+  const getFavorites = async (asyncValue: string, favoritesType: string) => {
     try {
       const value = await AsyncStorage.getItem(asyncValue);
       if (value !== null) {

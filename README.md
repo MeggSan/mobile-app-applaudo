@@ -4,7 +4,7 @@
 
 This is a mobile application for a technical challenge from the company Applaudo Studios, with connection to the Kitsu api: https://kitsu.docs.apiary.io/ to obtain information about Anime and Manga.
 
-The app present a principal screen with my personal and professional information, and other screens that show a list of differents Anime Series, Manga Series, view all its information in detail, and view a list of favorites.
+The app presents a principal screen with my personal and professional information, and other screens that show a list of differents Anime Series, Manga Series, view all its information in detail, and view a list of favorites.
 
 ## Project Versions
 

@@ -18,6 +18,11 @@ export const SearchBar = ({
   handleSearch,
   handleButtonSearch,
   placeholder,
+}: {
+  value: string;
+  handleSearch: any;
+  handleButtonSearch: any;
+  placeholder: string;
 }) => {
   return (
     <View style={Styles.containerHeader}>

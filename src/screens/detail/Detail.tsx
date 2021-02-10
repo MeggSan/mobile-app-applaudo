@@ -66,12 +66,13 @@ const {ANIMES, MANGAS} = ASYNC_STORAGE_VALUES;
 const {ANIME_DETAIL} = ROUTES;
 const {LIMIT_QUANTITY_RESULTS} = API;
 
-export const Detail = ({route}) => {
+export const Detail = ({route}: {route: any}) => {
   const {detailId} = route.params;
   const isAnimeDetail = route.name === ANIME_DETAIL;
-  const {animeFavorites} = useSelector((state) => state.favoritesReducer);
-  const {mangaFavorites} = useSelector((state) => state.favoritesReducer);
-  const [detail, setDetail] = useState(null);
+  const {animeFavorites, mangaFavorites} = useSelector(
+    ({favoritesReducer}: {favoritesReducer: any}) => favoritesReducer,
+  );
+  const [detail, setDetail] = useState({});
   const [episodes, setEpisodes] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [charactersDetails, setCharactersDetails] = useState([]);
@@ -112,7 +113,7 @@ export const Detail = ({route}) => {
     }
   }, [offsetCharacters]);
 
-  const getDetail = async (getApi) => {
+  const getDetail = async (getApi: any) => {
     try {
       const response = await getApi(detailId);
       setDetail(response.data.data);
@@ -122,7 +123,7 @@ export const Detail = ({route}) => {
     }
   };
 
-  const getEpisodes = async (getApi) => {
+  const getEpisodes = async (getApi: any) => {
     try {
       const response = await getApi(detailId, {
         'page[limit]': LIMIT_QUANTITY_RESULTS,
@@ -140,7 +141,7 @@ export const Detail = ({route}) => {
     }
   };
 
-  const getCharacters = async (getApi) => {
+  const getCharacters = async (getApi: any) => {
     try {
       const response = await getApi(detailId, {
         'page[limit]': API.LIMIT_QUANTITY_RESULTS,
@@ -153,7 +154,7 @@ export const Detail = ({route}) => {
         const moreResults = [...characters, ...results];
         setCharacters(moreResults);
         const promises = [];
-        const charactersResults = [];
+        const charactersResults: Array<any> = [];
         const get = isAnimeDetail
           ? getAnimeCharacterDetail
           : getMangaCharacterDetail;
@@ -215,7 +216,7 @@ export const Detail = ({route}) => {
   const isFavorite = () => {
     let favoritesArrayType = isAnimeDetail ? animeFavorites : mangaFavorites;
     const findFavorite = favoritesArrayType.find(
-      (favorite) => favorite.id === detailId,
+      (favorite: any) => favorite.id === detailId,
     );
     if (findFavorite) {
       setInFavorites(true);
@@ -226,7 +227,7 @@ export const Detail = ({route}) => {
     try {
       const favorites = isAnimeDetail ? animeFavorites : mangaFavorites;
       const newFavoritesArray = favorites.filter(
-        (favorite) => favorite.id !== detailId,
+        (favorite: any) => favorite.id !== detailId,
       );
       const valueStr = JSON.stringify(newFavoritesArray);
       await AsyncStorage.setItem(isAnimeDetail ? ANIMES : MANGAS, valueStr);
@@ -254,7 +255,7 @@ export const Detail = ({route}) => {
         ? detail.attributes.titles.en
         : detail.attributes.titles.en_jp
     }`;
-    const options = Platform.select({
+    const options: any = Platform.select({
       ios: {
         activityItemSources: [
           {
@@ -311,6 +312,7 @@ export const Detail = ({route}) => {
               ? detail.attributes.coverImage.small
               : detail.attributes.posterImage.small
           }
+          style={null}
         />
 
         {/* POSTER IMAGE AND TITLES */}
@@ -391,7 +393,12 @@ export const Detail = ({route}) => {
           {detail.attributes.youtubeVideoId !== '' &&
             detail.attributes.youtubeVideoId && (
               <View style={Styles.mgButton}>
-                <Button onPress={handleOpenYoutube} text={YOUTUBE_LINK} />
+                <Button
+                  onPress={handleOpenYoutube}
+                  text={YOUTUBE_LINK}
+                  colorButton={null}
+                  colorText={null}
+                />
               </View>
             )}
           <View style={Styles.mgButton}>
@@ -405,7 +412,8 @@ export const Detail = ({route}) => {
           <Button
             onPress={inFavorites ? handleRemoveFavorite : handleAddFavorite}
             text={inFavorites ? REMOVE_FAVORITE : ADD_FAVORITE}
-            colorButton={inFavorites && Styles.colorRemoveButton}
+            colorButton={inFavorites ? Styles.colorRemoveButton : null}
+            colorText={null}
           />
         </View>
 

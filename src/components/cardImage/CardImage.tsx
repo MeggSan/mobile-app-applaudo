@@ -10,7 +10,15 @@ import {Styles} from './CardImageStyles';
 
 const {EMPTY_TITLE_CARD} = DETAIL;
 
-export const CardImage = ({title, image, style = null}) => {
+export const CardImage = ({
+  title,
+  image,
+  style = null,
+}: {
+  title: string;
+  image: string;
+  style: Object | null;
+}) => {
   return (
     <ImageBackground
       source={{
