@@ -32,6 +32,12 @@ export const GlobalStyles = StyleSheet.create({
     fontFamily: FONTS.METROPOLIS_SEMIBOLD,
     fontSize: FONTS_SIZES.TEXT,
   },
+  textBoldWhite: {
+    ...PALETTE.wrapText,
+    fontFamily: FONTS.METROPOLIS_SEMIBOLD,
+    fontSize: FONTS_SIZES.TEXT,
+    color: COLORS.WHITE,
+  },
   containerTitle: {
     flexDirection: 'row',
     justifyContent: 'center',

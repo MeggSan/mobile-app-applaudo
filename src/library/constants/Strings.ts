@@ -134,7 +134,7 @@ export const DETAIL = {
   EPISODE_LENGTH: 'EPISODE LENGTH',
   CHAPTER_COUNT: 'CHAPTER COUNT',
   VOLUME_COUNT: 'VOLUME COUNT',
-  YOUTUBE_LINK: 'SEE YOUTUBE VIDEO LINK',
+  YOUTUBE_LINK: 'YOUTUBE VIDEO',
   EPISODES: 'EPISODES',
   CHARACTERS: 'CHARACTERS',
   ADD_FAVORITE: 'ADD FAVORITE',
@@ -144,6 +144,9 @@ export const DETAIL = {
   EN: 'English',
   EN_JP: 'English/Japanese',
   JA_JP: 'Japanese',
+  SHARE: 'SHARE NAME',
+  SHARE_MESSAGE: 'Hello! I want to share with you this Anime/Manga serie:',
+  SHARE_TITLE: 'MS Kitsu App',
 };
 
 export const LIST = {

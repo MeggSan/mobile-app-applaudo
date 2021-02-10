@@ -26,7 +26,7 @@ export const Styles = StyleSheet.create({
     borderColor: COLORS.DARK_RED,
   },
   mgBottom: {
-    marginBottom: 15,
+    marginBottom: 30,
   },
   mgTop: {
     marginTop: 15,
@@ -35,5 +35,18 @@ export const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  colorShareButton: {
+    backgroundColor: COLORS.SECONDARY,
+    borderColor: COLORS.BLUE,
+  },
+  containerButtons: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  mgButton: {
+    marginRight: 15,
+    marginBottom: 15,
   },
 });

@@ -25,6 +25,7 @@ The app present a principal screen with my personal and professional information
 | Axios                     | 0.21.1  |
 | React Native Bootsplash   | 3.1.3   |
 | React Native Offline      | 5.7.0   |
+| React Native Share        | 5.1.1   |
 | React Native Vector Icons | 8.0.0   |
 | React Redux               | 7.2.2   |
 | Redux                     | 4.0.5   |
